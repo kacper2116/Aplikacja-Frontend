@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Projekt-Frontend/static/css/main.4cc8598c.css",
+    "main.js": "/Projekt-Frontend/static/js/main.8ddc860d.js",
+    "index.html": "/Projekt-Frontend/index.html",
+    "main.4cc8598c.css.map": "/Projekt-Frontend/static/css/main.4cc8598c.css.map",
+    "main.8ddc860d.js.map": "/Projekt-Frontend/static/js/main.8ddc860d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4cc8598c.css",
+    "static/js/main.8ddc860d.js"
+  ]
+}
