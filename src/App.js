@@ -37,7 +37,7 @@ function App() {
     <Router>
 
       <Routes>
-        <Route exact path='/' element={<Home />} />
+        <Route exact path='' element={<Home />} />
 
         <Route path='/login' element={user ? <Navigate to="/" /> : <Login />} />
         <Route path='/register' element={user ? <Navigate to="/" /> : <Register />} />
@@ -49,11 +49,11 @@ function App() {
 
         <Route path='/cart' element={<Cart />} />
         <Route path='/success' element={<Success />} />
-         <Route path = '/checkout' element = { <Checkout/>}/>
-         <Route path = '/orders' element = { <Orders/>}/>
-         <Route path = '/order/:orderId' element = { <Order/>}/>
-          
-      
+        <Route path='/checkout' element={<Checkout />} />
+        <Route path='/orders' element={<Orders />} />
+        <Route path='/order/:orderId' element={<Order />} />
+
+
 
       </Routes>
 
