@@ -30,7 +30,7 @@ const ProductPage = () => {
       setLoading(true)
       try {
         let productId = searchParams.get('id')
-        const response = await axios.get(`http://localhost:5000/api/products/find/`+productId)
+        const response = await axios.get(`${baseURL}/products/find/`+productId)
       
         if(response){
           setProduct(response.data.product)

@@ -20,7 +20,7 @@ const Categories = () => {
   useEffect(() => {
     const getGenres = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/genres`)
+        const res = await axios.get(`${baseURL}/genres`)
 
         setGenres(res.data)
 

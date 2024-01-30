@@ -49,7 +49,7 @@ const RegisterForm = () => {
     setServerError('')
     try {
 
-      const response = await axios.post(`http://localhost:5000/api/auth/register`, formData)
+      const response = await axios.post(`${baseURL}/auth/register`, formData)
      
 
     } catch (error) {

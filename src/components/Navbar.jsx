@@ -24,6 +24,8 @@ const baseURL = process.env.REACT_APP_BASE_URL
 
 const Navbar = () => {
 
+  const baseURL = process.env.REACT_APP_BASE_URL
+
   const [searchParams, setSearchParams] = useSearchParams()
 
   const quantity = useSelector(state => state.cart.quantity)
@@ -103,7 +105,7 @@ const Navbar = () => {
         setLoading(true)
 
         if (searchTerm != '' && searchTerm != undefined) {
-          const response = await axios.get(` http://localhost:5000/api/products/search?query=${searchTerm}`);
+          const response = await axios.get(`${baseURL}/products/search?query=${searchTerm}`);
           setSearchResults(response.data);
           setNoResults(false)
 

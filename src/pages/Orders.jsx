@@ -13,9 +13,7 @@ const Orders = () => {
 
   const [orders, setOrders] = useState([])
   const userToken = useSelector(state => state.user.currentUser);
-  const [showOrderDetails, setshowOrderDetails] = useState(false);
-  const { param } = useParams();
-
+  const baseURL = process.env.REACT_APP_BASE_URL
 
   const navigate = useNavigate()
 
@@ -23,7 +21,7 @@ const Orders = () => {
     const getOrders = async () => {
 
       try {
-        const response = await axios.get(`http://localhost:5000/api/orders/${jwtDecode(userToken).sub}`, {
+        const response = await axios.get(`${baseURL}/orders/${jwtDecode(userToken).sub}`, {
           headers: {
             Authorization: `Bearer ${userToken}`
           }

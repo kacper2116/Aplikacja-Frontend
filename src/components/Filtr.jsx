@@ -10,11 +10,12 @@ const Filtr = ({handleFilters}) => {
     const [platforms, setPlatforms] = useState([])
     const [genres, setGenres] = useState([])
     const [languages, setLanguages] = useState([])
+    const baseURL = process.env.REACT_APP_BASE_URL
 
     useEffect(() => {
         const getPlatforms = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/api/platforms`)
+            const response = await axios.get(`${baseURL}/platforms`)
     
             setPlatforms(response.data.map(platform => platform.name))
     
@@ -27,7 +28,7 @@ const Filtr = ({handleFilters}) => {
 
         const getGenres = async () => {
             try {
-              const response = await axios.get(`http://localhost:5000/api/genres`)
+              const response = await axios.get(`${baseURL}/genres`)
       
               setGenres(response.data.map(genre => genre.name))
       
@@ -40,7 +41,7 @@ const Filtr = ({handleFilters}) => {
 
           const getLanguages = async () => {
             try {
-              const response = await axios.get(`http://localhost:5000/api/languages`)
+              const response = await axios.get(`${baseURL}/languages`)
       
               setLanguages(response.data.map(language => language.name))
       

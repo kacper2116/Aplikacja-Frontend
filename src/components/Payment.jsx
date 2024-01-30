@@ -14,6 +14,7 @@ const Payment = () => {
 
   const [clientSecret, setClientSecret] = useState("");
   const cart = useSelector((state) => state.cart)
+  const baseURL = process.env.REACT_APP_BASE_URL
 
   useEffect(() => {
 
@@ -26,7 +27,7 @@ const Payment = () => {
     console.log(productsInfo)
 
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:5000/api/checkout/payment", {
+    fetch(`${baseURL}/checkout/payment`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ products: productsInfo }),

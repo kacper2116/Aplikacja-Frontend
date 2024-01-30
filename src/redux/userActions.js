@@ -10,7 +10,7 @@ export const login = async (dispatch, user) => {
     dispatch(loginStart())
 
     try {
-        const response = await axios.post(`http://localhost:5000/api/auth/login`, user)
+        const response = await axios.post(`${baseURL}/auth/login`, user)
         const token = response.data.token
 
         dispatch(loginSuccess(token))

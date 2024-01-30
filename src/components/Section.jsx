@@ -21,7 +21,7 @@ const Section = ({ category, numberOfProducts }) => {
 
       setLoading(true)
       try {
-        const res = await axios.get(`http://localhost:5000/api/products?category=${category}`)
+        const res = await axios.get(`${baseURL}/products?category=${category}`)
 
         setProducts(res.data)
 

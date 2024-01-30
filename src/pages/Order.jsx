@@ -9,6 +9,8 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 const Order = () => {
 
+    const baseURL = process.env.REACT_APP_BASE_URL
+
     const { orderId } = useParams();
     const [orderData, setOrderData] = useState()
     const userToken = useSelector(state => state.user.currentUser);
@@ -25,7 +27,7 @@ const Order = () => {
 
             if (orderId) {
 
-                const response = await axios.get(`http://localhost:5000/api/orders/order/${orderId}`, {
+                const response = await axios.get(`${baseURL}/orders/order/${orderId}`, {
 
                     headers: {
                         Authorization: `Bearer ${userToken}`

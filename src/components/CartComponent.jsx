@@ -24,6 +24,7 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart)
 
   const dispatch = useDispatch();
+  const baseURL = process.env.REACT_APP_BASE_URL
 
   const [stripeToken, setStripeToken] = useState(null)
   const navigate = useNavigate()
@@ -40,7 +41,7 @@ const Cart = () => {
     const checkQuantity = async () => {
     
       try {
-        const response = await axios.get(`http://localhost:5000/api/products/${product._id}/${product.selectedPlatform}/quantity`)
+        const response = await axios.get(`${baseURL}/products/${product._id}/${product.selectedPlatform}/quantity`)
         const productQuantity = response.data
        
         

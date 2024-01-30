@@ -19,7 +19,7 @@ const Platforms = () => {
   useEffect(() => {
     const getPlatforms = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/platforms`)
+        const res = await axios.get(`${baseURL}/platforms`)
 
         setPlatforms(res.data)
 

@@ -15,6 +15,7 @@ const ListProducts = ({ searchParams }) => {
       const [totalPages, setTotalPages] = useState('')
       const { param } = useParams();
       const [serverError, setServerError] = useState(null)
+      const baseURL = process.env.REACT_APP_BASE_URL
 
       const [loading, setLoading] = useState(true);
 
@@ -26,8 +27,8 @@ const ListProducts = ({ searchParams }) => {
                   try {
 
                         const res = await axios.get(param 
-                              ? `http://localhost:5000/api/products/${param}?${searchParams}`
-                              : `http://localhost:5000/api/products?${searchParams}`
+                              ? `${baseURL}/products/${param}?${searchParams}`
+                              : `${baseURL}/products?${searchParams}`
                               
                         )
 

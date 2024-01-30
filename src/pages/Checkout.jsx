@@ -12,6 +12,7 @@ const Checkout = () => {
   const paymentIntent = searchParams.get('payment_intent');
   const clientSecret = searchParams.get('payment_intent_client_secret');
   const redirectStatus = searchParams.get('redirect_status');
+  const baseURL = process.env.REACT_APP_BASE_URL
 
   const userToken = useSelector(state => state.user.currentUser);
   const cart = useSelector((state) => state.cart)
@@ -30,7 +31,7 @@ const Checkout = () => {
         if (userToken) {
 
    
-          const response = await axios.post('http://localhost:5000/api/checkout', {
+          const response = await axios.post(`${baseURL}/api/checkout`, {
             paymentIntentId: paymentIntent,
             products: cart.products,
 
