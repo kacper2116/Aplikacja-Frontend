@@ -3,36 +3,44 @@ import styles from '../styles/section.module.css'
 import Product from '../components/Product'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import Loading from './Loading'
 
 import axios from 'axios'
 
+const Section = ({ category, numberOfProducts }) => {
 
-const Section = ({category, numberOfProducts}) => {
-
+  const baseURL = process.env.REACT_APP_BASE_URL
+  const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState([]);
-  
+
+  console.log(baseURL)
+
   useEffect(() => {
 
     const getProducts = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:5000/api/products?category=${category}`)
 
+      setLoading(true)
+      try {
+        const res = await axios.get(`http://localhost:5000/api/products?category=${category}`)
 
         setProducts(res.data)
 
       } catch (error) {
+        console.error("Wystąpił błąd podczas pobierania produktów")
+      }
 
+      finally {
+        setLoading(false)
       }
     }
 
     getProducts()
-   
+
 
   }, [])
 
- 
-const games = products
+
+  const games = products
 
   const [showedProducts, setShowedProducts] = useState([]);
 
@@ -73,6 +81,12 @@ const games = products
     <div className={styles.Container} ref={productsRef}>
       <h2 className={styles.SectionTitle}>{category}</h2>
 
+      {loading ? (
+        <Loading size={5}/>
+      ):(
+
+     
+
       <div className={styles.Products}>
 
         {showedProducts.map((game, index) => {
@@ -85,18 +99,20 @@ const games = products
 
         })}
 
-</div>
-        {startIndex < games.length && startIndex < 15 ? (
-          <button className={`${styles.SectionButton} ${styles.SectionButton_ShowMore}`} onClick={() => showMoreProducts()}><p>Pokaż więcej</p> <IoIosArrowDown size="2rem" className={styles.SectionButtonIcon} /></button>
+      </div>
 
-        ) : (
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-            <button className={`${styles.SectionButton} ${styles.SectionButton_Hide}`} onClick={() => hideProducts()}> <IoIosArrowUp size="4rem" className={styles.SectionButtonIcon} /></button>
-            <button className={`${styles.SectionButton} ${styles.SectionButton_ShowAll}`} > <Link to={`/products/${category}`}>Wszystkie z <span style={{ fontWeight: '900' }}>{category}</span></Link> </button>
-          </div>
-        )}
+)}
+      {startIndex < games.length && startIndex < 15 ? (
+        <button className={`${styles.SectionButton} ${styles.SectionButton_ShowMore}`} onClick={() => showMoreProducts()}><p>Pokaż więcej</p> <IoIosArrowDown size="2rem" className={styles.SectionButtonIcon} /></button>
 
-     
+      ) : (
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', marginTop:'3rem' }}>
+          <button className={`${styles.SectionButton} ${styles.SectionButton_Hide}`} onClick={() => hideProducts()}> <IoIosArrowUp size="4rem" className={styles.SectionButtonIcon} /></button>
+          <button className={`${styles.SectionButton} ${styles.SectionButton_ShowAll}`} > <Link to={`/products/${category}`}>Zobacz więcej z <span style={{ fontWeight: '900' }}>{category}</span></Link> </button>
+        </div>
+      )}
+
+
 
 
     </div>

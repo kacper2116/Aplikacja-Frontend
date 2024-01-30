@@ -6,11 +6,9 @@ import { Badge } from "@material-ui/core";
 import { IoMdCart } from "react-icons/io";
 import { useSelector } from 'react-redux'
 import { FaUser, FaSignOutAlt, FaLock } from 'react-icons/fa';
-import { userRequest } from '../requestMethods'
 import Logo from '../img/Logo.png';
 import Loading from './Loading'
 import { TbBrandShopee } from "react-icons/tb";
-
 import { useSearchParams, setSearchParams } from "react-router-dom";
 
 import { Link, Navigate, useNavigate, useNavigation } from 'react-router-dom'
@@ -19,6 +17,8 @@ import { useDispatch } from 'react-redux';
 import { jwtDecode } from "jwt-decode";
 
 import axios from 'axios';
+
+const baseURL = process.env.REACT_APP_BASE_URL
 
 
 
@@ -29,9 +29,6 @@ const Navbar = () => {
   const quantity = useSelector(state => state.cart.quantity)
   const user = useSelector(state => state.user.currentUser);
   const dispatch = useDispatch();
-
- 
-
 
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef(null);
@@ -59,7 +56,6 @@ const Navbar = () => {
 
 
   //Wyszukiwarka
-
 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -104,8 +100,10 @@ const Navbar = () => {
 
       try {
 
+        setLoading(true)
+
         if (searchTerm != '' && searchTerm != undefined) {
-          const response = await userRequest.get(`/products/search?query=${searchTerm}`);
+          const response = await axios.get(` http://localhost:5000/api/products/search?query=${searchTerm}`);
           setSearchResults(response.data);
           setNoResults(false)
 
@@ -135,6 +133,7 @@ const Navbar = () => {
   const handleResultClick = (productId) => {
 
     navigate(`/product?id=${productId}`)
+    setSearchResultsVisible(false)
 
   };
 
@@ -188,63 +187,52 @@ const Navbar = () => {
             <div>
 
 
-              <div>
-                {loading ? (
-                  <Loading size={'2'} />
-                ) : (
-                  <div className={styles.SearchResults}>
-                    {noResults ? (
-                      <div className={styles.NoResults}>No results</div>
-                    ) : (
-                      <>
-                        {displayedResults.map((result) => (
-                          <div key={result._id} onClick={() => handleResultClick(result._id)}>
-                            <img src={result.img} alt={result.title} />
-                            <h3>{result.title}</h3>
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                              <span style={{ fontSize: '1rem', fontWeight: '700' }}>{result.price}</span>
-                              <span style={{ fontSize: '1rem', fontWeight: '700', textAlign: 'center' }}>$</span>
+              <>
+
+                <div className={styles.SearchResults}>
+
+                  {loading ? (
+                    <div className = {styles.Loading}>
+                      <Loading size={3} />
+                    </div>
+                  ) : (
+
+                    <>
+
+                      {noResults ? (
+                        <div className={styles.NoResults}>Brak wyników</div>
+                      ) : (
+                        <>
+                          {displayedResults.map((result) => (
+                            <div key={result._id} onClick={() => handleResultClick(result._id)}>
+                              <img src={result.coverImg} alt={result.title} />
+                              <h3>{result.title}</h3>
+                              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <span style={{ fontSize: '1rem', fontWeight: '700', textAlign: 'center' }}>{result.price}</span>
+                                <span style={{ fontSize: '0.8rem', fontWeight: '600', textAlign: 'center' }}>PLN</span>
+                              </div>
                             </div>
-                          </div>
-                        ))}
-                        {searchResults.length > maxResults && (
-                          <div className={styles.SearchResultsSummary}>
-                            <span>{searchResults.length} Results</span>
-                            <button className={styles.SeeMoreButton} onClick={() => seeMore()} >See More</button>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
-              </div>
+                          ))}
+                          {searchResults.length > maxResults && (
+                            <div className={styles.SearchResultsSummary}>
+                              <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>{searchResults.length} Wyników</span>
+                              <button className={styles.SeeMoreButton} onClick={() => seeMore()} >Zobacz więcej</button>
+                            </div>
+                          )}
+                        </>
+                      )}
 
+                    </>
+                  )}
 
+                </div>
 
-
+              </>
 
             </div>
 
           )}
 
-        </div>
-
-        {/* { isInputFocused && (
-          <div className={styles.Overlay}>
-
-          </div>
-
-          )}  */}
-
-
-
-
-
-        <div className={styles.LangContainer}>
-          <div style={{ display: "flex", cursor: "pointer" }}>
-            <div className={styles.Flag}></div>
-            <span className={styles.Lang}>PL</span>
-          </div>
         </div>
 
       </div>
@@ -255,23 +243,24 @@ const Navbar = () => {
 
         {!user &&
           <Link to={'/login'}>
-            <span className={styles.Login}>Login</span>
+            <span className={styles.Login}>Zaloguj</span>
           </Link>
         }
 
         {!user &&
           <Link to={'/register'}>
-            <span className={styles.Register}>Register</span>
+            <span className={styles.Register}>Zarejestruj</span>
           </Link>
         }
+
+
 
         {user &&
 
           <div className={styles.UserPanel} ref={panelRef} onClick={displayUserPanel}>
 
             <div>
-              <FaUser /> <span>{jwtDecode(user).username}</span>
-
+              <FaUser /><span>{jwtDecode(user).username}</span>
             </div>
 
             {isOpen && (
@@ -294,12 +283,10 @@ const Navbar = () => {
             )
 
             }
+
           </div>
 
         }
-
-
-
 
         <Link to='/cart'>
           <Badge badgeContent={quantity} color="primary" className={styles.Cart_Badge}>
@@ -308,8 +295,6 @@ const Navbar = () => {
         </Link>
 
       </div>
-
-
 
     </div>
   )

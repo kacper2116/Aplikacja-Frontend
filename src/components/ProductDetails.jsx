@@ -3,7 +3,7 @@ import styles from '../styles/productDetails.module.css'
 import { addProduct } from '../redux/cartRedux'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsCartCheckFill } from "react-icons/bs";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ProductDetails = ({ product, availablePlatforms }) => {
 
@@ -15,13 +15,12 @@ const ProductDetails = ({ product, availablePlatforms }) => {
   const [releaseDate, setReleaseDate] = useState('')
   const [availability, setAvailability] = useState(false)
 
-  
   useEffect(() => {
 
     setAvailability(Object.keys(availablePlatforms).length > 0 ? true : false)
     if (product.platforms) setSelectedPlatform(Object.keys(availablePlatforms)[0]);
 
-  }, [product])
+  }, [])
 
 
   useEffect(() => {
@@ -47,7 +46,7 @@ const ProductDetails = ({ product, availablePlatforms }) => {
   const handlePlatformSelect = (platform) => {
 
     if (availablePlatforms[platform]) setSelectedPlatform(platform);
-    
+
   };
 
 
@@ -90,13 +89,13 @@ const ProductDetails = ({ product, availablePlatforms }) => {
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
             <BsCartCheckFill size={'7rem'} style={{ margin: '1rem 2rem' }} />
-            <h2>Item added to cart</h2>
+            <h2>Dodano do koszyka</h2>
 
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <button onClick={continueShopping}>Continue shopping</button>
-            <button onClick={checkCart}>Check cart</button>
+            <button onClick={continueShopping}>Kontynuuj zakupy</button>
+            <button onClick={checkCart}>Sprawdź koszyk</button>
           </div>
         </div>
       </div>
@@ -115,17 +114,17 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
           <div className={styles.InfoContainer}>
             <div className={styles.Info_Platform}>
-              
-              <h3>Platform</h3>
+
+              <h3>Platformy</h3>
 
               <div className={styles.PlatformsContainer}>
-                
+
                 {product.platforms && product.platforms.map((platform, index) => {
                   const isPlatformAvailable = availablePlatforms.hasOwnProperty(platform);
-              
+
                   return (
                     <div key={index}
-                      
+
                       className={`${styles.Platform} ${selectedPlatform === platform ? styles.Selected_Platform : ''} ${availablePlatforms[platform] ? '' : styles.Platform_Not_Available}`}
 
                       id={platform}
@@ -143,16 +142,18 @@ const ProductDetails = ({ product, availablePlatforms }) => {
             </div>
 
             <div className={styles.Info_Tags}>
-              <h3>Genres</h3>
+              <h3>Gatunki</h3>
 
               <div className={styles.TagsContainer}>
 
                 {product.tags && product.tags.map((tag) => {
                   return (
+                    <Link to={`/products/${tag}`}>
+                      <div className={styles.Tag}>
+                        {tag}
+                      </div>
+                    </Link>
 
-                    <div className={styles.Tag}>
-                      {tag}
-                    </div>
 
                   )
 
@@ -168,16 +169,16 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
         <div className={styles.Right}>
           <div className={styles.Top}>
-            <span className={styles.Title}>{product.title} {selectedPlatform + ' Key'}</span>
+            <span className={styles.Title}>{product.title} {selectedPlatform}</span>
             <span className={styles.Price}>{product.price} &euro; </span>
           </div>
           <hr></hr>
           <div className={styles.Bottom}>
             <div className={styles.BottomContainer}>
               {availability ? (
-                <button onClick={addToCart}>Add to cart</button>
+                <button onClick={addToCart}>Dodaj do koszyka</button>
               ) : (
-                <span>Product currently unavailable</span>
+                <span>Product tymczasowo niedostępny</span>
               )}
 
             </div>
@@ -189,19 +190,21 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
       <div className={styles.MoreInfo}>
 
-        <div>Description</div>
-        <div>Image gallery</div>
-        <div>Hardware requirements</div>
-        <div>Additional informations</div>
+        <div>Opis</div>
+        <div>Zdjęcia</div>
+        {product.platforms.includes('PC') &&
+          <div>Wymagania systemowe</div>
+        }
+        <div>Dodatkowe informacje</div>
 
       </div>
 
       <div className={styles.Desc}>
-        <h1>Description</h1>
+        <h1>Opis</h1>
 
         <div className={styles.Desc_Content}>
           <h3>{product.title}</h3>
-          <h4>Publisher: {product.publisher}</h4>
+          <h4>Twórca: {product.publisher}</h4>
           <span>
             {product.details && product.details.description}
 
@@ -214,48 +217,52 @@ const ProductDetails = ({ product, availablePlatforms }) => {
       {/* <ImageGallery data={data.gallery} /> */}
 
 
-      <div className={styles.Requirements_Container}>
-        <h1>Hardware requirements(PC)</h1>
 
-        <div className={styles.Requirements_Content}>
+      {product.platforms.includes('PC') &&
+        <div className={styles.Requirements_Container}>
+          <h1>Wymagania systemowe(PC)</h1>
 
-          <div className={styles.MinimumReq}>
-            <span>Minimum</span>
-            <ul style={{ listStyle: 'none' }}>
+          <div className={styles.Requirements_Content}>
 
-              {product.details && Object.entries(product.details.requirements.minimal).map(([key, value]) => (
-                <div style={{ display: 'flex', width: '100%' }}>
-                  <h4>{key}: </h4><li>{value}</li>
-                </div>
-              ))}
+            <div className={styles.MinimumReq}>
+              <span>Minimalne</span>
+              <ul style={{ listStyle: 'none' }}>
 
-            </ul>
+                {product.details && Object.entries(product.details.requirements.minimal).map(([key, value]) => (
+                  <div style={{ display: 'flex', width: '100%' }}>
+                    <h4>{key}: </h4><li>{value}</li>
+                  </div>
+                ))}
+
+              </ul>
+            </div>
+
+            <div className={styles.RecommendedReq}>
+              <span>Rekomendowane</span>
+
+              <ul style={{ listStyle: 'none' }}>
+
+                {product.details && Object.entries(product.details.requirements.recommended).map(([key, value]) => (
+                  <div style={{ display: 'flex', width: '100%' }}>
+                    <h4>{key}: </h4><li>{value}</li>
+                  </div>
+                ))}
+
+              </ul>
+            </div>
+
           </div>
-
-          <div className={styles.RecommendedReq}>
-            <span>Recommended</span>
-
-            <ul style={{ listStyle: 'none' }}>
-
-              {product.details && Object.entries(product.details.requirements.recommended).map(([key, value]) => (
-                <div style={{ display: 'flex', width: '100%' }}>
-                  <h4>{key}: </h4><li>{value}</li>
-                </div>
-              ))}
-
-            </ul>
-          </div>
-
         </div>
-      </div>
+
+      }
 
 
       <div className={styles.AdditionalInfo}>
-        <h1>Additional informations</h1>
+        <h1>Dodatkowe informacje</h1>
 
         <div className={styles.AdditionalInfo_Wrapper}>
           <div>
-            <h3>Languages</h3>
+            <h3>Obsługiwane języki</h3>
             <ul>
 
               {product.details && product.details.languages.map((language) => {
@@ -273,8 +280,8 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
 
           <div>
-            <h3>Release date</h3><span>{releaseDate}</span>
-            <h3>Developer</h3><span>{product.publisher}</span>
+            <h3>Data wydania</h3><span>{releaseDate}</span>
+            <h3>Twórca</h3><span>{product.publisher}</span>
           </div>
 
 

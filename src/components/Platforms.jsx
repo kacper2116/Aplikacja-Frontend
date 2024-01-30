@@ -6,20 +6,20 @@ import { SiPlaystation3 } from "react-icons/si";
 import { SiPlaystation4 } from "react-icons/si";
 import { SiPlaystation5 } from "react-icons/si";
 import { FaXbox } from "react-icons/fa";
-
 import { SiNintendoswitch } from "react-icons/si";
 
-import { userRequest } from '../requestMethods'
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 const Platforms = () => {
 
+  const baseURL = process.env.REACT_APP_BASE_URL
   const [platforms, setPlatforms] = useState(null)
 
   useEffect(() => {
     const getPlatforms = async () => {
       try {
-        const res = await userRequest.get('/platforms')
+        const res = await axios.get(`http://localhost:5000/api/platforms`)
 
         setPlatforms(res.data)
 
@@ -62,13 +62,6 @@ const Platforms = () => {
             </div>
           </Link>
         ))}
-
-        <div className={styles.Platform}>{setPlatformIcon('PC')}</div>
-        <div className={styles.Platform}>{setPlatformIcon('PC')}</div>
-        <div className={styles.Platform}>{setPlatformIcon('PC')}</div>
-        <div className={styles.Platform}>{setPlatformIcon('PC')}</div>
-
-
 
       </div>
 

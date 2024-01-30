@@ -15,19 +15,37 @@ const Orders = () => {
   const userToken = useSelector(state => state.user.currentUser);
   const [showOrderDetails, setshowOrderDetails] = useState(false);
   const { param } = useParams();
- 
+
 
   const navigate = useNavigate()
 
   useEffect(() => {
     const getOrders = async () => {
 
-      const response = await axios.get(`http://localhost:5000/api/orders/${jwtDecode(userToken).sub}`, {
-        headers: {
-          Authorization: `Bearer ${userToken}`
+      try {
+        const response = await axios.get(`http://localhost:5000/api/orders/${jwtDecode(userToken).sub}`, {
+          headers: {
+            Authorization: `Bearer ${userToken}`
+          }
+        })
+
+        if(response.data && response.data.message){
+          setOrders([])
+          console.log("Brak zamówień")
+        }else if (response.data && response.data.orders){
+          setOrders(response.data.orders)
         }
-      })
-      setOrders(response.data.orders)
+
+      } catch (error) {
+
+        if(error.response){
+          console.error("Błąd odpowiedzi od serwera", error.response.data)
+        }else if (error.request){
+          console.error("Brak odpowiedzi od serwera", error.request)
+        }else console.error("Błąd serwera", error.message)
+
+      }
+
     }
 
     getOrders()
@@ -38,12 +56,15 @@ const Orders = () => {
     navigate(`/order/${orderId}`)
   }
 
- 
-
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
       <Navbar />
+
+
+      {orders.length > 0 ? 
+      (
+
       <div className={styles.Container}>
 
         <div className={styles.Info_Properties}>
@@ -68,8 +89,8 @@ const Orders = () => {
               <div>{order.paymentMethod}</div>
               <div>{new Date(order.createdAt).toLocaleString()}</div>
               <div>{order.orderValue} {order.currency}</div>
-               <div onClick={() => goToOrderDetails(order._id)}>Show Details</div>
-            
+              <div onClick={() => goToOrderDetails(order._id)}>Show Details</div>
+
             </div>
 
           )
@@ -77,6 +98,12 @@ const Orders = () => {
         })}
 
       </div>
+      ): (
+        <div style={{marginTop:'10rem'}}>
+          <h1>Brak zamówień</h1>
+        </div>
+      )
+}
       <Footer />
     </div>
   )

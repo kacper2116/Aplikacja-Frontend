@@ -11,18 +11,17 @@ const Sort = ({ handleSort }) => {
   const [isFiltered, setIsFiltered] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  
   const navigate = useNavigate()
 
   const options = [
 
-    { value: 'Default', label: 'Default' },
-    { value: 'Price ascending', label: 'Price ascending' },
-    { value: 'Price descending', label: 'Price descending' },
-    { value: 'Name A-Z', label: 'Name A-Z' },
-    { value: 'Name Z-A', label: 'Name Z-A' },
-    { value: 'Newest', label: 'Newest' },
-    { value: 'Oldest', label: 'Newest' },
+    { value: 'Default', label: 'Domyślnie' },
+    { value: 'Price ascending', label: 'Cena rosnąco' },
+    { value: 'Price descending', label: 'Cena malejąco' },
+    { value: 'Name A-Z', label: 'Nazwa A-Z' },
+    { value: 'Name Z-A', label: 'Nazwa Z-A' },
+    { value: 'Newest', label: 'Najnowsze' },
+    { value: 'Oldest', label: 'Najstarsze' },
   ]
 
   const [selectedOption, setSelectedOption] = useState('');
@@ -43,20 +42,21 @@ const Sort = ({ handleSort }) => {
   };
 
   
-
   const resetFilters = () => {
 
     const currentUrl = new URL(window.location.href);
     const urlSearchParams = currentUrl.searchParams;
 
     urlSearchParams.delete('price');
-    urlSearchParams.delete('tags');
+    urlSearchParams.delete('genres');
     urlSearchParams.delete('platforms');
     urlSearchParams.delete('languages');
     urlSearchParams.delete('sort');
 
     setIsFiltered(false)
 
+    console.log(currentUrl)
+  
     navigate(currentUrl.pathname + '?' + urlSearchParams.toString(), { replace: true });
     window.location.reload();
 
@@ -69,12 +69,27 @@ const Sort = ({ handleSort }) => {
     const sortParams = params.get('sort');
 
 
-    if (params.has('price') || params.has('tags') || params.has('platforms') || params.has('languages') || params.has('sort')) setIsFiltered(true)
+    if (params.has('price') || params.has('genres') || params.has('platforms') || params.has('languages') || params.has('sort')) setIsFiltered(true)
     else setIsFiltered(false)
 
     if (sortParams) {
 
-      setSelectedOption({ value: JSON.parse(sortParams), label: JSON.parse(sortParams) })
+    
+
+      const translate = (sortParams) => {
+        switch(JSON.parse(sortParams)[0]){
+          case 'Default':return'Domyślnie';break;
+          case 'Price ascending':return'Cena rosnąco';break;
+          case 'Price descending':return'Cena malejąco';break;
+          case 'Name A-Z':return'Nazwa A-Z';break;
+          case 'Name Z-A':return'Nazwa Z-A';break;
+          case 'Newest':return'Najnowsze';break;
+          case 'Oldest':return'Najstarsze';break;
+        }
+      }
+      
+
+      setSelectedOption({ value: JSON.parse(sortParams), label: translate(sortParams) })
 
     }else {
       setSelectedOption({})
@@ -86,7 +101,7 @@ const Sort = ({ handleSort }) => {
 
 
     <div className={styles.Container}>
-      <label htmlFor="sort">Sort by</label>
+      <label htmlFor="sort">Sortuj</label>
       <Select className={styles.Select} value={selectedOption} name='sort' id='sort' options={options} onChange={handleChange} />
 
       {isFiltered &&

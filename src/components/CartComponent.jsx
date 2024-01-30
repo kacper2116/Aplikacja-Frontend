@@ -4,7 +4,6 @@ import { FiPlus } from "react-icons/fi";
 import { FiMinus } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
 import { useSelector, useDispatch } from 'react-redux';
-import { userRequest } from '../requestMethods'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { increaseQuantity, decreaseQuantity, removeProduct } from '../redux/cartRedux';
 import { IoMdRemoveCircleOutline } from "react-icons/io";
@@ -37,7 +36,6 @@ const Cart = () => {
 
   const handleIncreaseQuantity = (product) => {
 
-    console.log("dsds")
 
     const checkQuantity = async () => {
     
@@ -77,7 +75,7 @@ const Cart = () => {
 
   const removeItemFromCart = (productName) => {
     dispatch(removeProduct({ name: productName }));
-    console.log('removing item: ' + productName)
+   
   };
 
 
@@ -115,16 +113,16 @@ const Cart = () => {
 
 
             <div className={styles.Cart}>
-              <h2>Your cart</h2>
+              <h2>Twój koszyk</h2>
               <hr></hr>
 
               <div className={styles.Info_Properties}>
 
                 <span></span>
-                <span>Name</span>
-                <span>Price</span>
-                <span>Quantity</span>
-                <span>Total</span>
+                <span>Nazwa</span>
+                <span>Cena</span>
+                <span>Ilość</span>
+                <span>Suma</span>
 
               </div>
 
@@ -138,7 +136,7 @@ const Cart = () => {
 
                     <RiDeleteBin2Line className={styles.RemoveFromCartButton} onClick={() => removeItemFromCart(product.name)}></RiDeleteBin2Line>
 
-                    <img src={product.img} ></img>
+                    <img src={product.coverImg} ></img>
 
                     <div className={styles.Product_Name}>{product.title + ' ' + product.selectedPlatform}</div>
 
@@ -163,10 +161,10 @@ const Cart = () => {
 
             <div className={styles.Summary}>
 
-              <h2>Summary</h2>
+              <h2>Podsumowanie</h2>
 
               <div className={styles.Summary_Info}>
-                <h2>Total</h2>
+                <h2>Wartość zamówienia</h2>
                 <h1>{cart.total}$</h1>
               </div>
 
@@ -174,11 +172,11 @@ const Cart = () => {
 
               <div className={styles.Discount}>
 
-                <h2>Discount Code</h2>
+                <h2>Kod rabatowy</h2>
 
                 <div className={styles.DiscountWrapper}>
-                  <input type='text' placeholder='Discount code'></input>
-                  <button className={styles.DiscountButton}>Check</button>
+                  <input type='text' placeholder='Wpisz swój kod'></input>
+                  <button className={styles.DiscountButton}>Ok</button>
                 </div>
 
               </div>
@@ -187,16 +185,16 @@ const Cart = () => {
 
                 <div className={styles.Guest_Panel}>
 
-                  <span>Continue without logging</span>
+                  <span>Kup bez logowania</span>
 
 
                   <form onSubmit={() => handleCheckout()}>
                     <input type='email' placeholder='E-mail' required='true' onChange={(e) => setEmail(e.target.value)}></input>
 
                     <Link to={'/login?redirect=cart'}>
-                      <span className={styles.Login_Link}>Or Log in</span>
+                      <span className={styles.Login_Link}>Lub zaloguj się</span>
                     </Link>
-                    <button type='submit'>Checkout</button>
+                    <button type='submit'>Płatność</button>
                   </form>
                 </div>
 
@@ -205,7 +203,7 @@ const Cart = () => {
               {(user || guest) &&
 
                 <div className={styles.Payment_Container}>
-                  <h2>Payment Method</h2>
+                  <h2>Metoda płatności</h2>
                   <Payment className={styles.Payment} />
                 </div>
 

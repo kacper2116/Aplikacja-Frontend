@@ -1,15 +1,17 @@
-import { publicRequest } from "../requestMethods"
 import { loginFailure, loginStart, loginSuccess, logoutUser } from "./userRedux"
 import { clearCart } from "./cartRedux"
 import { resetGuestInfo } from "./guestRedux"
+import axios from "axios"
+import { Navigate, useNavigate } from "react-router-dom"
 
 export const login = async (dispatch, user) => {
+
+    const baseURL = process.env.REACT_APP_BASE_URL
     dispatch(loginStart())
 
-   
     try {
-        const res = await publicRequest.post('/auth/login', user)
-        const token = res.data.token
+        const response = await axios.post(`http://localhost:5000/api/auth/login`, user)
+        const token = response.data.token
 
         dispatch(loginSuccess(token))
         dispatch(resetGuestInfo())
@@ -34,10 +36,11 @@ export const login = async (dispatch, user) => {
 
 
 export const logout = () => async (dispatch) => {
-    // Dodaj logikę czyszczenia tokenów sesji, czyścisz dane z localStorage itp.
-    // ...
-
+ 
+  
     dispatch(logoutUser());
     dispatch(clearCart());
+  
+  
 
 };

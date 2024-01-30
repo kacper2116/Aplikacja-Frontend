@@ -14,6 +14,7 @@ const ListProducts = ({ searchParams }) => {
       const [totalFilteredProducts, setTotalFilteredProducts] = useState('')
       const [totalPages, setTotalPages] = useState('')
       const { param } = useParams();
+      const [serverError, setServerError] = useState(null)
 
       const [loading, setLoading] = useState(true);
 
@@ -36,7 +37,8 @@ const ListProducts = ({ searchParams }) => {
 
 
                   } catch (error) {
-                        console.error("Bład pobierania danych",)
+                        
+                      console.log(error)
                   } finally {
                         setLoading(false);
                   }

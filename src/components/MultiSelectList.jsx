@@ -4,7 +4,7 @@ import { FaTimes } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSearchParams, setSearchParams, useParams } from "react-router-dom";
 
-const MultiSelectList = ({ name, listItems, functionSetFilter }) => {
+const MultiSelectList = ({ name, label ,listItems, functionSetFilter }) => {
 
   const { param } = useParams();
   const [searchParams, setSearchParams] = useSearchParams()
@@ -67,11 +67,11 @@ const MultiSelectList = ({ name, listItems, functionSetFilter }) => {
 
       <div>
 
-        <label htmlFor="MultiSelectList"><h2>{name.charAt(0).toUpperCase() + name.slice(1)}</h2></label>
+        <label htmlFor="MultiSelectList"><h2>{label.charAt(0).toUpperCase() + label.slice(1)}</h2></label>
         <Select
 
           id="MultiSelectList"
-          name={name}
+          name={label}
           value={selectedItems}
           onChange={handleSelectChange}
           options={options}

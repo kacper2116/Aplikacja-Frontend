@@ -14,8 +14,8 @@ const Product = ({ data }) => {
 
 			<div className={styles.Img} style={{ backgroundImage: `url(${data.coverImg})` }} />
 			<div className={styles.Info}>
-				<div className={styles.Info__Title}>{data.title}</div>
-				<div className={styles.Info__Price}>{data.price} PLN</div>
+				<div className={styles.Info__Title}><span>{data.title}</span></div>
+				<div className={styles.Info__Price}><span>{data.price} </span><span className = {styles.Currency}> PLN</span></div>
 			</div>
 
 			

@@ -1,4 +1,3 @@
-import { publicRequest } from "../requestMethods"
 import { setGuestInfoStart, setGuestInfoSuccess, setGuestInfoFailure, resetGuestInfo } from "./guestRedux"
 import { clearCart } from "./cartRedux"
 

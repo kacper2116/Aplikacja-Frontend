@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import styles from '../styles/Form.module.css'
 import axios from 'axios';
-import { publicRequest } from "../requestMethods"
 import { MdKeyboardReturn } from "react-icons/md";
 import { Link } from 'react-router-dom'
+import Loading from './Loading'
 
 
 const RegisterForm = () => {
 
+  const baseURL = process.env.REACT_APP_BASE_URL
+  const [loading, setLoading] = useState(false);
 
   const [serverError, setServerError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -40,41 +42,28 @@ const RegisterForm = () => {
 
     if (Object.keys(validationErrors).length > 0) {
 
-      return; // Zakończ, jeśli są błędy
+      return;
     }
 
- 
+    setLoading(true)
+    setServerError('')
     try {
 
-      const res = await publicRequest.post('/auth/register', formData)
-
-      if (res.status >= 200 && res.status < 300) {
-
-        setServerError('');
-        setSuccess(true)
-      } else {
-
-
-        setServerError('An error occurred during registration');
-
-      }
+      const response = await axios.post(`http://localhost:5000/api/auth/register`, formData)
+     
 
     } catch (error) {
       if (error.response) {
-        const errorData = error.response.data;
 
-        // Sprawdź konkretny błąd i ustaw odpowiedni komunikat
-        if (errorData.message.includes('email')) {
-          setServerError('This email is already registered');
-        } else if (errorData.message.includes('login')) {
-          setServerError('This login is already registered');
-        } else {
-          setServerError(errorData.message || 'An error occurred during registration');
-        }
+        const errorMessage = error.response.data.message
+        setServerError(errorMessage)
+
       } else {
         console.error(error);
-        setServerError('A network error occurred during registration');
+        setServerError('Błąd serwera');
       }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -84,7 +73,7 @@ const RegisterForm = () => {
     const errors = {};
 
     if (data.password !== data.confirmPassword) {
-      errors.confirmPassword = 'The passwords are not the same';
+      errors.confirmPassword = 'Hasła nie są identyczne';
     }
 
     return errors;
@@ -102,12 +91,12 @@ const RegisterForm = () => {
       </Link>
 
       <div className={styles.FormHeader}>
-        <h1>Create Account</h1>
-        <span style={{ fontSize: '1.1rem',color:'var(--color2)' }}>Already have an account?
-        <Link to={'/login'}>
-         <span className={styles.Form_Link}>Login</span>
-         </Link>
-         </span>
+        <h1>Stwórz konto</h1>
+        <span style={{ fontSize: '1.1rem', color: 'var(--color2)' }}>Masz już konto?
+          <Link to={'/login'}>
+            <span className={styles.Form_Link}>Zaloguj się</span>
+          </Link>
+        </span>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -118,33 +107,35 @@ const RegisterForm = () => {
         </div>
 
         <div className={styles.FormField}>
-          <input name='username' type='text' placeholder='Username' value={formData.username} onChange={handleChange} required></input>
+          <input name='username' type='text' placeholder='Login' value={formData.username} onChange={handleChange} required></input>
         </div>
 
         <div className={styles.FormField}>
-          <input name='password' type='text' placeholder='Password' value={formData.password} onChange={handleChange} required></input>
+          <input name='password' type='password' placeholder='Hasło' value={formData.password} onChange={handleChange} required></input>
         </div>
 
         <div className={styles.FormField}>
-          <input name='confirmPassword' type='text' placeholder='Repeat password' value={formData.confirmPassword} onChange={handleChange} required></input>
+          <input name='confirmPassword' type='password' placeholder='Powtórz hasło' value={formData.confirmPassword} onChange={handleChange} required></input>
           {errors.confirmPassword && <span className={styles.Error}>{errors.confirmPassword}</span>}
 
         </div>
 
         <div className={styles.FormField}>
           <div className={styles.DataAgreement}>
-            <input name='agreement' type='checkbox' checked={formData.agreement} onChange={handleChange} required></input><label for='checbkox' >I consent to the processing of my personal data</label>
+            <input name='agreement' type='checkbox' checked={formData.agreement} onChange={handleChange} required></input><label for='checbkox' >Zgadzam się na przetwarzanie danych osobowych</label>
           </div>
         </div>
 
         <div className={styles.FormField}>
-          <button type='submit'>Sign up</button>
+          <button type='submit' disabled={loading}>
+            {loading ? <Loading size={1} /> : 'Zarejestruj się'}
+          </button>
         </div>
 
 
-        {serverError && <span className = {styles.Error}>{serverError}</span>}
+        {serverError && <span className={styles.Error}>{serverError}</span>}
 
-        {success && <span className = {styles.Success}>Succesfully registered</span>}
+        {success && <span className={styles.Success}>Pomyślnie zarejestrowano</span>}
 
 
 

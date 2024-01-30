@@ -3,15 +3,16 @@
     flex-direction: column;
     width: 70%;
     margin-bottom: 5rem;
-    border: 2px solid red;
+   
 }
 
 .Wrapper {
 
-    height: 60vh;
+    height: auto;
     display: flex;
     background-color: var(--color1);
     color: var(--color1);
+
 }
 
 .Left {
@@ -22,18 +23,18 @@
     background-color: var(--color3);
     margin-right: 1rem;
     align-items: center;
+    
 
 }
 
 .ImgContainer {
-   
-   height: 100%;
-   overflow: hidden;
+  
 
 }
 
 .ImgContainer img {
     width: 100%;
+    border-bottom: 0.2rem solid black;
 
 }
 
@@ -41,65 +42,75 @@
     width: 100%;
     display: flex; 
     justify-content: center;
+    
 
   
 }
 
-.Info_Platform {
+.Info_Platform, .Info_Tags {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding: 10px 0 0 20px;
+    flex: 2;
+    padding: 0.5rem;
 
 }
 
+
+
+
 .Info_Platform h3,
 .Info_Tags h3 {
-    flex: 1;
+    
     font-size: 1rem;
     font-weight: 500;
 }
 
 .PlatformsContainer,
 .TagsContainer {
-    flex: 2;
+    
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    margin: 0.5rem 0;
+    font-weight: 600;
    
 
 }
 
 .Platform {
-    border: 0.1rem solid var(--color1);
+    border: 0.2rem solid var(--color1);
     padding: 0.2rem 0.8rem;
-    margin-right: 1rem;
+    margin: 0.2rem 0.3rem 0.2rem 0;
     border-radius: 1rem;
-    width: 20%;
+    height: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     cursor: pointer;
     font-size: 0.8rem;
+
 }
 
 
 .Platform_Not_Available{
 
-    border: 1px solid red;
+    border: 0.15rem solid var(--color1);
+    opacity: 0.4;
+
+    cursor: not-allowed;
 }
 
 .Selected_Platform {
-    border: 1px solid var(--color2);
-    width: 3rem;
-    height: 1rem;
-    padding: 0.5rem 1rem;
-    margin-right: 1rem;
-    border-radius: 2rem;
+    border: 0.15rem solid var(--color2);
+    padding: 0.2rem 0.8rem;
+    margin: 0.2rem 0.3rem 0.2rem 0;
+    border-radius: 1rem;
+    height: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     cursor: pointer;
     font-size: 0.8rem;
 }
@@ -117,15 +128,17 @@
 }
 
 .Tag {
-    border: 1px solid var(--color1);
-    padding: 5px 10px;
-    height: 30px;
-    margin-right: 10px;
-    border-radius: 20px;
+    border: 0.15rem solid var(--color1);
+    padding: 0.2rem 0.8rem;
+    margin: 0.2rem 0.3rem 0.2rem 0;
+    border-radius: 1rem;
+    height: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     cursor: pointer;
+    font-size: 0.8rem;
 }
 
 
@@ -147,8 +160,10 @@
 
 .Title {
 
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 500;
+    margin: 0 2rem;
+    
 
 }
 

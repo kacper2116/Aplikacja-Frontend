@@ -1,36 +1,35 @@
+.Container {
 
-.Container{
-    
     width: 17rem;
-    height: 26rem;
+    height: 28rem;
 
     min-width: 10rem;
-    
+
     display: flex;
     flex-direction: column;
-    justify-content: center;   
-    cursor: pointer; 
+    justify-content: center;
+    cursor: pointer;
     margin: 0;
     padding: 0;
 
 
     overflow: hidden;
 
- 
-    &:hover{
+
+    &:hover {
         opacity: 0.9;
     }
 }
 
-.Img{
-   display: flex;
-   flex: 3; 
-   background-size:cover;
-  
+.Img {
+    display: flex;
+    flex: 3;
+    background-size: cover;
+
 
 }
 
-.Info{
+.Info {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -40,24 +39,56 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: 500;
+    
+
 }
 
-.Info__Title{
-    display: flex;
-    font-size: 1.2rem;
-    flex: 1;
-    align-items: center;
-    justify-content:center;
+
+.Info span {
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.5;
+    max-height: 3em;
     overflow: hidden;
+    font-weight: 500;   
+}
+
+.Info__Title {
+
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.1rem;
+
+}
+
+.Info__Title span {
+    margin: 0 1rem;
     
 }
 
-.Info__Price{
-    font-size: 1.5rem;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content:center;
+
+
+.Info__Price {
+    font-size: 1.2rem;
+    font-weight: 600;
     overflow: hidden;
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Info__Price>span {}
+
+.Currency {
+
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 0.3rem;
 
 }

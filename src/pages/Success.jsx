@@ -2,63 +2,64 @@ import React from 'react'
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { userRequest } from "../requestMethods";
 import axios from 'axios';
 
 
 const Success = () => {
 
-    const location = useLocation()
-    const data = location.state.stripeData
-    console.log(data)
-    const cart = useSelector((state) => state.cart)
+  const baseURL = process.env.REACT_APP_BASE_URL
 
-    const currentUser = useSelector((state) => state.user.currentUser)
-    const [orderId, setOrderId] = useState(null)
-   
+  const location = useLocation()
+  const data = location.state.stripeData
+  console.log(data)
+  const cart = useSelector((state) => state.cart)
 
-    useEffect(() => {
+  const currentUser = useSelector((state) => state.user.currentUser)
+  const [orderId, setOrderId] = useState(null)
 
-    
-        const createOrder = async() => {
 
-         
+  useEffect(() => {
 
-            try {
-       
-                const res = await axios.post('http://localhost:5000/api/orders', {
-                    userId: currentUser._id,
-                    orderValue: 2, 
-                    paymentMethod: 'card'
-                    
-                })
 
-                
+    const createOrder = async () => {
 
-                setOrderId(res.data._id)
-            } catch (error) {
-                
-            }
-        }
-        data && createOrder()
-    },[cart, data, currentUser])
+
+
+      try {
+
+        const res = await axios.post(`${baseURL}/orders`, {
+          userId: currentUser._id,
+          orderValue: 2,
+          paymentMethod: 'card'
+
+        })
+
+
+
+        setOrderId(res.data._id)
+      } catch (error) {
+
+      }
+    }
+    data && createOrder()
+  }, [cart, data, currentUser])
 
 
   return (
     <div
-    style={{
-      height: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    {orderId
-      ? `Order has been created successfully. Your order number is ${orderId}`
-      : `Successfull. Your order is being prepared...`}
-    <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
-  </div>
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {orderId
+        ? `Order has been created successfully. Your order number is ${orderId}`
+        : `Successfull. Your order is being prepared...`}
+      <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
+    </div>
   )
 }
 

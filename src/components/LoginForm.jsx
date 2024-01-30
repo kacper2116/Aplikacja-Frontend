@@ -5,6 +5,7 @@ import { login } from "../redux/userActions";
 import { resetError } from '../redux/userRedux';
 import { MdKeyboardReturn } from "react-icons/md";
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import Loading from './Loading'
 
 
 
@@ -14,7 +15,6 @@ const LoginForm = () => {
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
 
-
   const { isFetching, error } = useSelector((state) => state.user)
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -22,7 +22,6 @@ const LoginForm = () => {
 
   const navigate = useNavigate()
 
- 
   const handleLogin = async (e) => {
 
     e.preventDefault()
@@ -35,7 +34,6 @@ const LoginForm = () => {
     } catch (error) {
       console.log(error)
     }
-
 
   }
 
@@ -56,30 +54,37 @@ const LoginForm = () => {
       </Link>
 
       <div className={styles.FormHeader}>
-        <h1>Log in</h1>
-        <span style={{ fontSize: '1.1rem',color:'var(--color2)' }}>You do not have an account?
+        <h1>Logowanie</h1>
+        <span style={{ fontSize: '1.1rem',color:'var(--color2)' }}>Nie masz konta?
           <Link to={'/register'}>
-            <span className={styles.Form_Link} >Register</span>
+            <span className={styles.Form_Link} >Zarejestruj się</span>
           </Link>
         </span>
       </div>
 
+    <form onSubmit={handleLogin}>
 
       <div className={styles.FormField}>
-        <input name='login' type='text' placeholder='Login' onChange={(e) => setUsername(e.target.value)}></input>
+        <input name='login' type='text' placeholder='Login' required onChange={(e) => setUsername(e.target.value)}></input>
       </div>
 
       <div className={styles.FormField}>
-        <input name='password' type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}></input>
+        <input name='password' type='password' required placeholder='Password' onChange={(e) => setPassword(e.target.value)}></input>
       </div>
 
       <div className={styles.FormField}>
-        <button type='submit' onClick={handleLogin} disabled={isFetching}>Log in</button>
+
+        <button type='submit' disabled={isFetching}>
+            {isFetching ? <Loading size={1} /> : 'Zaloguj się'}
+          </button>
+
       </div>
+
+      </form>
 
       {error && <span className={styles.Error}>{error}</span>}
 
-      <a className={styles.Form_Link} href='#'>Forgot password?</a>
+      <a className={styles.Form_Link} href='#'>Zapomniałeś hasła?</a>
 
     </div>
   )

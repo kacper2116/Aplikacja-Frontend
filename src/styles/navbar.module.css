@@ -89,7 +89,7 @@
 
 }
 
-.SearchResults > div{
+.SearchResults > div:not(.Loading){
   width: 100%;
   display: flex;
   align-items: center;
@@ -97,11 +97,15 @@
   padding: 3%;
   box-sizing: border-box;
  
-  padding-bottom: 1rem;
+
  
 }
 
-.SearchResults > div:not(.SearchResultsSummary):not(.NoResults){
+.Loading{
+  padding: 3%;
+}
+
+.SearchResults > div:not(.SearchResultsSummary):not(.NoResults):not(.Loading){
 
   cursor: pointer;
 
@@ -138,14 +142,20 @@
   margin: 1rem 0;
   background-color: var(--color3);
   color: var(--color1);
-  padding: 0.5rem;
+  padding: 0.7rem;
   cursor: pointer;
   box-sizing: border-box;
-
+  font-weight: 600;
   border: none;
 
+  border: 0.2rem solid transparent;
+
   &:hover{
-    color: var(--color2);
+ 
+    box-shadow: 0.1rem 0.1rem 1rem var(--color3);
+    color: black;
+
+
   }
 
 
@@ -179,15 +189,14 @@
   display: flex;
   flex: 1;
   align-items: center;
-  justify-content: right;
-
-  
+  justify-content: right;  
 }
 
 .Login, .Register{
-  padding: 1rem;
+  margin: 0 1rem;
   cursor: pointer;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
+  font-weight: 400;
   
 
   &:hover{
@@ -208,9 +217,18 @@
 }
 
 .UserPanel{
-  padding: 2rem;
+ 
   cursor: pointer;
   font-size: 1.3rem;
+}
+
+.UserPanel > div {
+  padding: 0.5rem;
+  margin-right: 1rem;
+}
+
+.UserPanel > div > span {
+  margin-left: 0.5rem;
 }
 
 .UserPanel > div:first-child{
@@ -222,8 +240,14 @@
 
 .User_dropdown_menu{
   position: absolute;
-  z-index: 1;
-
+  margin-top: 1rem;
+  z-index: 999;
+  border-radius: 0.5rem;
+  border: 0.1rem solid var(--color1);
+  background-color: var(--color3);
+  box-shadow: 0.1rem 0.1rem 1rem 0.1rem var(--color3);
+  color: var(--color1);  
+  width: 10%;
 }
 
 .User_dropdown_menu > div {
@@ -232,16 +256,25 @@
   cursor: pointer;
   display: flex;
   margin-top: 1rem;
-
+  padding: 0.2rem;
 
   &:hover{
     color: var(--color2);
   }
+
+
 }
+
+
+.User_dropdown_menu > div > span {
+  margin-left:0.9rem ;
+
+}
+
 
 .Cart_Badge{
   &:hover{
-    color: var(--color2);
+    color: var(--color5);
   }
 }
 

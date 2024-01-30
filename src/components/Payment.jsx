@@ -6,12 +6,9 @@ import styles from '../styles/payment.module.css'
 
 import CheckoutForm from "./CheckoutForm";
 import { useSelector } from "react-redux";
-//import "./App.css";
 
-// Make sure to call loadStripe outside of a component’s render to avoid
-// recreating the Stripe object on every render.
-// This is your test publishable API key.
 const stripePromise = loadStripe("pk_test_51OFe18IwpyhMM9K7XISefWatZkYRa10kXTRN2ocEzo6s3LqsaK3ORRJgm7NfMQnW2AQx6f3kq2hziW5sDUGWMkbD00BeewkNAU");
+
 
 const Payment = () => {
 
