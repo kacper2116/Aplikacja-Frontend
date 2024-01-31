@@ -12,6 +12,7 @@ const Sort = ({ handleSort }) => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const navigate = useNavigate()
+  const location =  useLocation()
 
   const options = [
 

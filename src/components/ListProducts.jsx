@@ -26,10 +26,10 @@ const ListProducts = ({ searchParams }) => {
 
                   try {
 
-                        const res = await axios.get(param 
+                        const res = await axios.get(param
                               ? `${baseURL}/products/${param}?${searchParams}`
                               : `${baseURL}/products?${searchParams}`
-                              
+
                         )
 
                         setProducts(res.data.filteredProducts)
@@ -38,8 +38,8 @@ const ListProducts = ({ searchParams }) => {
 
 
                   } catch (error) {
-                        
-                      console.log(error)
+
+                        console.log(error)
                   } finally {
                         setLoading(false);
                   }
@@ -57,7 +57,10 @@ const ListProducts = ({ searchParams }) => {
             <div className={styles.Container}>
 
                   <h2>{param}</h2>
-                  <h4 style={{ marginBottom: '2rem' }}>{totalFilteredProducts} wyników</h4>
+
+                  {products.length > 0 &&
+                        <h4 style={{ marginBottom: '2rem' }}>{totalFilteredProducts} wyników</h4>
+                  }
                   {/* <h2 className={styles.SectionTitle}>{filters.text}</h2> */}
 
                   <div>
