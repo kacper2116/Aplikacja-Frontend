@@ -44,21 +44,12 @@ const Sort = ({ handleSort }) => {
   
   const resetFilters = () => {
 
-    const currentUrl = new URL(window.location.href);
-    const urlSearchParams = currentUrl.searchParams;
+ 
 
-    urlSearchParams.delete('price');
-    urlSearchParams.delete('genres');
-    urlSearchParams.delete('platforms');
-    urlSearchParams.delete('languages');
-    urlSearchParams.delete('sort');
-
+    const pathname = location.pathname;
     setIsFiltered(false)
+    navigate(pathname)
 
-    console.log(currentUrl)
-  
-    navigate(currentUrl.pathname + '?' + urlSearchParams.toString(), { replace: true });
-    window.location.reload();
 
   }
 

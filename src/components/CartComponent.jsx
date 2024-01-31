@@ -166,7 +166,7 @@ const Cart = () => {
 
               <div className={styles.Summary_Info}>
                 <h2>Wartość zamówienia</h2>
-                <h1>{cart.total}$</h1>
+                <h1>{cart.total} <span style={{fontSize:'0.8rem'}}>PLN</span></h1>
               </div>
 
 
@@ -225,7 +225,7 @@ const Cart = () => {
 
         <div style={{ marginTop: '10rem' }}>
 
-          <h1>Your cart is empty</h1>
+          <h1>Twój koszyk jest pusty</h1>
         </div>
 
       }
