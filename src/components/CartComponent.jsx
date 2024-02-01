@@ -11,7 +11,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import Payment from './Payment';
-import { addGuest } from "../redux/guestActions";
+import { addGuest, removeGuest } from "../redux/guestActions";
 import axios from 'axios';
 import { ToastProvider, useToasts } from 'react-toast-notifications';
 
@@ -39,23 +39,23 @@ const Cart = () => {
 
 
     const checkQuantity = async () => {
-    
+
       try {
         const response = await axios.get(`${baseURL}/products/${product._id}/${product.selectedPlatform}/quantity`)
         const productQuantity = response.data
-       
-        
+
+
         if (product.quantity + 1 <= productQuantity) {
           dispatch(increaseQuantity({ name: product.name }));
-          console.log("essa")
+         
         }
 
-        
+
         else {
-         
-          addToast('Too many products!', {
-            appearance: 'error', 
-            autoDismiss: true, 
+
+          addToast('Taka ilość jest niedostępna', {
+            appearance: 'error',
+            autoDismiss: true,
             autoDismissTimeout: 3000,
           });
         }
@@ -76,7 +76,7 @@ const Cart = () => {
 
   const removeItemFromCart = (productName) => {
     dispatch(removeProduct({ name: productName }));
-   
+
   };
 
 
@@ -142,13 +142,13 @@ const Cart = () => {
                     <div className={styles.Product_Name}>{product.title + ' ' + product.selectedPlatform}</div>
 
 
-                    <div className={styles.Product_Price}>{product.price}</div>
+                    <div className={styles.Product_Price}>{product.price} PLN</div>
                     <div className={styles.Product_Quantity}>
                       <IoMdRemoveCircleOutline size={'2rem'} className={styles.Product_Quantity_Button} onClick={() => handleDecreaseQuantity(product)} />
                       <span>{product.quantity}</span>
                       <IoMdAddCircleOutline size={'2rem'} className={styles.Product_Quantity_Button} onClick={() => handleIncreaseQuantity(product)} /></div>
 
-                    <div className={styles.Product_TotalPrice}>{(product.price * product.quantity).toFixed(2)}</div>
+                    <div className={styles.Product_TotalPrice}>{(product.price * product.quantity).toFixed(2)} PLN</div>
 
 
 
@@ -165,41 +165,34 @@ const Cart = () => {
               <h2>Podsumowanie</h2>
 
               <div className={styles.Summary_Info}>
-                <h2>Wartość zamówienia</h2>
-                <h1>{cart.total} <span style={{fontSize:'0.8rem'}}>PLN</span></h1>
+                <h2>Wartość zamówienia: </h2>
+                <h2>{cart.total} <span style={{ fontSize: '1.5rem' }}>PLN</span></h2>
               </div>
 
-
-
-              <div className={styles.Discount}>
-
-                <h2>Kod rabatowy</h2>
-
-                <div className={styles.DiscountWrapper}>
-                  <input type='text' placeholder='Wpisz swój kod'></input>
-                  <button className={styles.DiscountButton}>Ok</button>
-                </div>
-
-              </div>
-
-              {!user && !guest &&
-
+              {!user && (
                 <div className={styles.Guest_Panel}>
+                  {(!guest ? (
+                    <>
+                      <span>Kup bez logowania</span>
+                      <form onSubmit={(e) => handleCheckout(e)}>
+                        <input type='email' placeholder='E-mail' required onChange={(e) => setEmail(e.target.value)} />
+                        <Link to={'/login?redirect=cart'}>
+                          <span className={styles.Login_Link}>Lub zaloguj się</span>
+                        </Link>
+                        <button type='submit'>Przejdź dalej</button>
+                      </form>
+                    </>
+                  ) : (
+                    <>
+                      <span style={{fontSize:'1.2rem'}}>Adres email: {guest.email}</span>
+                      <button className={styles.Change_Email_Button} onClick={() => dispatch(removeGuest())}>Zmień</button>
+                    </>
 
-                  <span>Kup bez logowania</span>
-
-
-                  <form onSubmit={() => handleCheckout()}>
-                    <input type='email' placeholder='E-mail' required='true' onChange={(e) => setEmail(e.target.value)}></input>
-
-                    <Link to={'/login?redirect=cart'}>
-                      <span className={styles.Login_Link}>Lub zaloguj się</span>
-                    </Link>
-                    <button type='submit'>Płatność</button>
-                  </form>
+                  ))}
                 </div>
+              )}
 
-              }
+
 
               {(user || guest) &&
 

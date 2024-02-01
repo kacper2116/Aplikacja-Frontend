@@ -69,10 +69,10 @@ const Order = () => {
                 }
             )
 
+            
             const productKey = response.data.key
 
             setProductKey(productKey)
-            console.log(productKey)
 
         } catch (error) {
 
@@ -85,7 +85,7 @@ const Order = () => {
 
     if (orderData && orderData.products) {
 
-        console.log(orderData.products)
+    
 
         return (
 
@@ -98,12 +98,12 @@ const Order = () => {
                         <div className={styles.Order}>
 
                             <div className={styles.OrderDetails}>
-                                <h3 className={styles.Order_Id}>Order ID: {orderData._id}</h3>
-                                <h4 className={styles.Order_Date}>Date: {new Date(orderData.createdAt).toLocaleString()}</h4>
+                                <h3 className={styles.Order_Id}>ID zamówienia: {orderData._id}</h3>
+                                <h4 className={styles.Order_Date}>Data: {new Date(orderData.createdAt).toLocaleString()}</h4>
                             </div>
 
                             <div className={styles.Order_Info}>
-                                <div>Products</div>
+                                <div>Produkty</div>
                                 <div>Status</div>
                             </div>
 
@@ -132,18 +132,19 @@ const Order = () => {
 
                                             <div className={styles.Order_Status}>
 
-                                                {product.received === true ? "Received" : "Ready to collect"}
+                                                {product.received === true ? "Odebrano" : "Do odbioru"}
 
                                             </div>
 
 
                                             <div className={styles.Product_Key}>
-                                                <button onClick={() => openModal(product._id)}>{product.received === true ? 'Show key' : 'Receive key'}</button>
+                                                <button onClick={() => openModal(product._id)}>{product.received === true ? 'Pokaż klucz' : 'Odbierz klucz'}</button>
 
                                             </div>
 
-
+                                            
                                         </div>
+                                       
                                     )
 
                                 }))}
@@ -166,15 +167,23 @@ const Order = () => {
                             <div className={styles.CloseButton} onClick={closeModal}>
                                 <MdClear />
                             </div>
-                            <p>Receive key? </p>
-                            <div style={{ display: 'flex', width: '50%' }}>
-                                <button onClick={() => getKey(selectedProductId)}>Yes</button>
-                                <button onClick={closeModal}>No</button>
-                            </div>
 
-                            {productKey &&
-                                <span className={styles.Product_Key}>{productKey}</span>
+                            {productKey ? (
+                                 <span className={styles.Product_Key}>{productKey}</span>
+                            ):(
+                                <>
+                                <p>Odebrać klucz? </p>
+                                <div style={{ display: 'flex', width: '50%' }}>
+                                    <button onClick={() => getKey(selectedProductId)}>Tak</button>
+                                    <button onClick={closeModal}>Nie</button>
+                                </div>
+                                </>
+                            )
+                               
                             }
+                           
+
+                            
                         </div>
                     </Modal>
 

@@ -19,6 +19,8 @@ const ListProducts = ({ searchParams }) => {
 
       const [loading, setLoading] = useState(true);
 
+      console.log(param)
+
       useEffect(() => {
 
             //Pozyskanie produktów
@@ -50,19 +52,25 @@ const ListProducts = ({ searchParams }) => {
             getProducts()
 
 
-      }, [searchParams])
+      }, [param, searchParams])
+
+      const translateParam = (param) => {
+            switch(param){
+                  case 'All Games':return 'Wszystkie Gry';break;
+                  case 'Latest Games':return 'Najnowsze Gry';break;
+            }
+      }
 
       return (
 
-            <div className={styles.Container}>
+            <section className={styles.Container}>
 
-                  <h2>{param}</h2>
+                  <h2>{translateParam(param)}</h2>
 
                   {products.length > 0 &&
-                        <h4 style={{ marginBottom: '2rem' }}>{totalFilteredProducts} wyników</h4>
+                        <h4 style={{ marginBottom: '2rem' }}>Wyniki: {totalFilteredProducts}</h4>
                   }
-                  {/* <h2 className={styles.SectionTitle}>{filters.text}</h2> */}
-
+                  
                   <div>
 
                         {loading ? (
@@ -101,7 +109,8 @@ const ListProducts = ({ searchParams }) => {
                         )}
 
                   </div>
-            </div>
+            </section>
+
 
       )
 

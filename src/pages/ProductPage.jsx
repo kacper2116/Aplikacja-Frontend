@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom'
 import { useSearchParams } from "react-router-dom";
 import axios from 'axios'
 import Loading from '../components/Loading'
+import { ToastProvider } from 'react-toast-notifications';
 
 const ProductPage = () => {
 
@@ -35,7 +36,7 @@ const ProductPage = () => {
         if(response){
           setProduct(response.data.product)
           setAvailablePlatforms(response.data.availablePlatforms)
-          console.log(product)
+          
 
         }
 
@@ -52,6 +53,8 @@ const ProductPage = () => {
   
   return (
 
+
+    <ToastProvider>
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight:'100vh'}}>
       <Navbar />
       {loading ? (
@@ -62,6 +65,7 @@ const ProductPage = () => {
       
       <Footer />
     </div>
+    </ToastProvider>
   )
 }
 

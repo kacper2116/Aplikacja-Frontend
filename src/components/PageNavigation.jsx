@@ -65,21 +65,26 @@ const PageNavigation = ({ totalFilteredProducts, totalPages }) => {
     }
 
     return (
-        <div className={styles.Container}>
 
 
-            <MdFirstPage className={page > 1 ? styles.Arrow : styles.Arrow_Disabled} onClick={() => firstPage()} />
+        <nav className={styles.Container}>
+          
 
-            <IoIosArrowBack className={page > 1 ? styles.Arrow : styles.Arrow_Disabled} onClick={() => prevPage()} />
+                <MdFirstPage className={page > 1 ? styles.Arrow : styles.Arrow_Disabled} onClick={() => firstPage()} />
+
+                <IoIosArrowBack className={page > 1 ? styles.Arrow : styles.Arrow_Disabled} onClick={() => prevPage()} />
 
 
-            <span>{page} / {totalPages}</span>
+                <span>{page} / {totalPages}</span>
 
-            <IoIosArrowForward className={page < totalPages ? styles.Arrow : styles.Arrow_Disabled} onClick={() => nextPage()} />
+                <IoIosArrowForward className={page < totalPages ? styles.Arrow : styles.Arrow_Disabled} onClick={() => nextPage()} />
 
-            <MdLastPage className={page < totalPages ? styles.Arrow : styles.Arrow_Disabled} onClick={() => lastPage()} />
+                <MdLastPage className={page < totalPages ? styles.Arrow : styles.Arrow_Disabled} onClick={() => lastPage()} />
 
-        </div>
+            
+        </nav>
+
+
     )
 }
 

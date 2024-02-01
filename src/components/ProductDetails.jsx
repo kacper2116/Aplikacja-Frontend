@@ -4,23 +4,59 @@ import { addProduct } from '../redux/cartRedux'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsCartCheckFill } from "react-icons/bs";
 import { Link, useNavigate } from 'react-router-dom';
+import { FaHeartCirclePlus } from "react-icons/fa6";
+import ImageGallery from './ImageGallery'
+import axios from 'axios';
+import { ToastProvider, useToasts } from 'react-toast-notifications';
 
 const ProductDetails = ({ product, availablePlatforms }) => {
+  
 
   const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch()
-
+  const cart = useSelector((state) => state.cart)
+  const baseURL = process.env.REACT_APP_BASE_URL
+  const { addToast } = useToasts();
   const [allPlatforms, setAllPlatforms] = useState(product.platforms)
-  const [selectedPlatform, setSelectedPlatform] = useState('')
+  const [selectedPlatform, setSelectedPlatform] = useState(Object.keys(availablePlatforms)[0])
   const [releaseDate, setReleaseDate] = useState('')
-  const [availability, setAvailability] = useState(false)
+  const [availability, setAvailability] = useState(Object.keys(availablePlatforms).length > 0 ? true : false)
+
+  const [tooMuch, setTooMuch] = useState(false)
 
   useEffect(() => {
 
-    setAvailability(Object.keys(availablePlatforms).length > 0 ? true : false)
-    if (product.platforms) setSelectedPlatform(Object.keys(availablePlatforms)[0]);
+    const checkQuantity = async () => {
 
-  }, [])
+
+      try {
+        const response = await axios.get(`${baseURL}/products/${product._id}/${selectedPlatform}/quantity`)
+        const productQuantity = response.data
+
+        const productsInCart = cart.products.filter(p => p._id === product._id && p.selectedPlatform === selectedPlatform);
+
+        if (productsInCart.length > 0 && productsInCart[0].quantity >= productQuantity) {
+          setTooMuch(true)
+          delete availablePlatforms[selectedPlatform];
+
+        }
+        else setTooMuch(false)
+
+
+
+
+
+
+      } catch (error) {
+        console.error("Wystąpił błąd podczas pobierania produktów")
+      }
+    }
+
+    checkQuantity()
+
+  }, [cart, selectedPlatform])
+
+
 
 
   useEffect(() => {
@@ -52,15 +88,26 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
   const addToCart = () => {
 
-    document.body.classList.add('overlay-active');
+
+    if (tooMuch) {
+      addToast('Produkt już niedostępny', {
+        appearance: 'error',
+        autoDismiss: true,
+        autoDismissTimeout: 3000,
+      });
+    }
+    else {
+
+      document.body.classList.add('overlay-active');
 
 
 
-    dispatch(
-      addProduct({ ...product, quantity, selectedPlatform })
-    )
+      dispatch(
+        addProduct({ ...product, quantity, selectedPlatform })
+      )
 
-    setShowCartInfo(true)
+      setShowCartInfo(true)
+    }
   }
 
 
@@ -105,14 +152,19 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
 
   return (
-    <div className={styles.Container}>
+
+
+
+
+
+    <article className={styles.Container}>
       <div className={styles.Wrapper}>
         <div className={styles.Left}>
           <div className={styles.ImgContainer}>
             <img src={product.wideImg} />
           </div>
 
-          <div className={styles.InfoContainer}>
+          <article className={styles.InfoContainer}>
             <div className={styles.Info_Platform}>
 
               <h3>Platformy</h3>
@@ -163,22 +215,30 @@ const ProductDetails = ({ product, availablePlatforms }) => {
               </div>
             </div>
 
-          </div>
+          </article>
 
         </div>
 
         <div className={styles.Right}>
           <div className={styles.Top}>
-            <span className={styles.Title}>{product.title} {selectedPlatform}</span>
-            <span className={styles.Price}>{product.price} &euro; </span>
+            <header>
+              <span className={styles.Title}>{product.title} <span style={{ fontSize: '1.1rem', fontWeight: '700', color: 'rgb(170, 170, 170)', marginLeft: '0.5rem' }}>{selectedPlatform}</span></span>
+              <span className={styles.Price}>{product.price} PLN </span>
+            </header>
           </div>
           <hr></hr>
           <div className={styles.Bottom}>
             <div className={styles.BottomContainer}>
               {availability ? (
-                <button onClick={addToCart}>Dodaj do koszyka</button>
+                <>
+                  <button onClick={addToCart}>Dodaj do koszyka</button>
+
+                </>
               ) : (
-                <span>Product tymczasowo niedostępny</span>
+                <>
+                  <span>Produkt tymczasowo niedostępny</span>
+
+                </>
               )}
 
             </div>
@@ -199,7 +259,7 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
       </div>
 
-      <div className={styles.Desc}>
+      <section className={styles.Desc}>
         <h1>Opis</h1>
 
         <div className={styles.Desc_Content}>
@@ -213,13 +273,21 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
         </div>
 
-      </div>
-      {/* <ImageGallery data={data.gallery} /> */}
+      </section>
+
+      <section>
+        <ImageGallery />
+      </section>
+
+
+
+
+
 
 
 
       {product.platforms.includes('PC') &&
-        <div className={styles.Requirements_Container}>
+        <section className={styles.Requirements_Container}>
           <h1>Wymagania systemowe(PC)</h1>
 
           <div className={styles.Requirements_Content}>
@@ -252,12 +320,12 @@ const ProductDetails = ({ product, availablePlatforms }) => {
             </div>
 
           </div>
-        </div>
+        </section>
 
       }
 
 
-      <div className={styles.AdditionalInfo}>
+      <section className={styles.AdditionalInfo}>
         <h1>Dodatkowe informacje</h1>
 
         <div className={styles.AdditionalInfo_Wrapper}>
@@ -286,7 +354,7 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
 
         </div>
-      </div>
+      </section>
 
 
       {showCartInfo &&
@@ -295,7 +363,9 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
       }
 
-    </div>
+    </article>
+
+
   )
 }
 

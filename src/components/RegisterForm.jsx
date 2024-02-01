@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import styles from '../styles/Form.module.css'
 import axios from 'axios';
 import { MdKeyboardReturn } from "react-icons/md";
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import Loading from './Loading'
-
+import Popup from './Popup';
 
 const RegisterForm = () => {
 
   const baseURL = process.env.REACT_APP_BASE_URL
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate()
 
   const [serverError, setServerError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -50,9 +52,12 @@ const RegisterForm = () => {
     try {
 
       const response = await axios.post(`${baseURL}/auth/register`, formData)
-     
+      
+      setSuccess(true)
 
     } catch (error) {
+
+      setSuccess(false)
       if (error.response) {
 
         const errorMessage = error.response.data.message
@@ -135,7 +140,7 @@ const RegisterForm = () => {
 
         {serverError && <span className={styles.Error}>{serverError}</span>}
 
-        {success && <span className={styles.Success}>Pomyślnie zarejestrowano</span>}
+        {success && <Popup message={'Pomyślnie zarejestrowano'} onConfirm={() =>navigate('/login') }/>}
 
 
 

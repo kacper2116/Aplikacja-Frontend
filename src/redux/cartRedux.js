@@ -44,10 +44,6 @@ const cartRedux = createSlice({
 
             const productName = action.payload.name;
 
-            
-
-         
-
             const existingProduct = state.products.find(
                 (product) => product.name === productName
                 

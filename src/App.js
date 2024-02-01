@@ -21,6 +21,7 @@ import { useSelector } from 'react-redux'
 import Checkout from './pages/Checkout'
 import Orders from './pages/Orders'
 import Order from './pages/Order'
+import ChangePassword from './pages/ChangePassword'
 
 
 
@@ -37,6 +38,7 @@ function App() {
 
         <Route path='/login' element={user ? <Navigate to="/" /> : <Login />} />
         <Route path='/register' element={user ? <Navigate to="/" /> : <Register />} />
+        <Route path='/change-password' element={!user ? <Navigate to="/" /> : <ChangePassword />} />
 
         <Route path='/products' element={<Products />} />
         <Route path='/products/:param' element={<Products />} />

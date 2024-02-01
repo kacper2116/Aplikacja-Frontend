@@ -1,0 +1,65 @@
+.Container{
+    width: 20vw;
+    height: 20vh;
+
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 0.2rem;
+    position: fixed;
+    z-index: 999;
+
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3rem;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color1);
+    box-shadow: 0.2rem 0.2rem 1rem 0.2rem black;
+}
+
+.Message {
+    font-weight: 500;
+}
+
+.Container > * {
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+.Container > button{
+
+    width: 30%;
+    padding:0.5rem;
+    cursor: pointer;
+    background-color: var(--color5);
+    border: none;
+    border-radius: 0.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color1);
+    border: 0.1rem solid transparent;
+
+    &:hover{
+        border: 0.1rem solid black;
+    }
+}
+
+
+
+
+.Overlay {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 998;
+    background-color: var(--color3);
+    opacity: 0.8;
+}

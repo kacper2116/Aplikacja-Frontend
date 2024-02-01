@@ -3,24 +3,42 @@ import Payment from '../components/Payment'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import axios from 'axios'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux'
+import Loading from '../components/Loading'
+import { FaCircleCheck } from "react-icons/fa6";
+import { FaCircleXmark } from "react-icons/fa6";
+import { MdKeyboardReturn } from "react-icons/md";
+import { clearCart } from "../redux/cartRedux"
+import styles from '../styles/checkout.module.css'
+import { useDispatch } from 'react-redux';
+
 
 const Checkout = () => {
 
   const [searchParams] = useSearchParams();
-  const paymentIntent = searchParams.get('payment_intent');
-  const clientSecret = searchParams.get('payment_intent_client_secret');
+
   const redirectStatus = searchParams.get('redirect_status');
   const baseURL = process.env.REACT_APP_BASE_URL
+  const dispatch = useDispatch();
 
   const userToken = useSelector(state => state.user.currentUser);
   const cart = useSelector((state) => state.cart)
   const guest = useSelector((state) => state.guest.guestInfo)
 
+
   const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   const [guestOrUser, setguestOrUser] = useState('')
+  const urlSearchParams = new URLSearchParams(window.location.search);
+
+  const paymentIntent = urlSearchParams.get('payment_intent');
+  const clientSecret = urlSearchParams.get('payment_intent_client_secret');
+  const navigate = useNavigate()
+
+  
 
   useEffect(() => {
 
@@ -28,10 +46,12 @@ const Checkout = () => {
 
       try {
 
+        if(paymentIntent){
+
+        
         if (userToken) {
 
-   
-          const response = await axios.post(`${baseURL}/api/checkout`, {
+          const response = await axios.post(`${baseURL}/checkout`, {
             paymentIntentId: paymentIntent,
             products: cart.products,
 
@@ -45,27 +65,42 @@ const Checkout = () => {
           )
 
           if (response.data.success) {
-            console.log("success")
+
+            setSuccess(true)
+            dispatch(clearCart());
+            
             setguestOrUser('user')
 
-          } else console.log("failure")
+          }
 
         } else {
+
           const response = await axios.post('http://localhost:5000/api/checkout/guest', {
             paymentIntentId: paymentIntent,
             guestEmail: guest.email,
             products: cart.products
           })
 
+      
+
           if (response.data.success) {
-            console.log("success")
+            setSuccess(true)
             setguestOrUser('guest')
-          } else console.log("failure")
+
+          } else console.log("edsads")
         }
+      }
 
       } catch (error) {
+
         console.error('Błąd podczas przekazywania danych do serwera:', error);
         setError(error)
+        setSuccess(false)
+
+      } finally {
+        setLoading(false)
+        window.history.replaceState({}, document.title, window.location.pathname);
+
       }
     }
 
@@ -75,28 +110,102 @@ const Checkout = () => {
 
 
 
-  const navigate = useNavigate()
-
-
-
+  console.log(guestOrUser)
   return (
-   
+
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
-      <Navbar />
-      {guestOrUser === 'user' &&
-        <div>
-          <button onClick={()=>navigate('/orders')}>Przejrzyj swoje zamówienia</button>
-        </div>
+
+
+      <div className={styles.Overlay}></div>
+
+
+      {loading ? (
+        <Loading size={5} />
+      ) : (
+
+        success ? (
+          <>
+
+            {guestOrUser === 'user' && (
+              <div className={styles.Checkout_Success}>
+
+                <div>
+
+                  <span style={{ fontSize: '4rem', margin: '2rem' }}> Płatność zakończona pomyślnie</span>
+
+                  <Link to={'/orders'}>
+                    <div className={styles.Return_Button}>
+                      Przejdź do zamówień
+                      <MdKeyboardReturn size={'3rem'} />
+                    </div>
+                  </Link>
+
+
+                </div>
+
+              </div>
+
+            )}
+
+
+            {guestOrUser === 'guest' && (
+              <div className={styles.Checkout_Success}>
+
+                <div>
+
+                  <span style={{ fontSize: '4rem', margin: '2rem' }}> Płatność zakończona pomyślnie</span>
+                  <span style={{fontSize:'1rem', marginBottom:'1rem'}}>Klucz został wysłany na adres : {guest.email}</span>
+                  <Link to={'/'}>
+                    <div className={styles.Return_Button}>
+                      Powrót na stronę główną
+                      <MdKeyboardReturn size={'3rem'} />
+                    </div>
+                  </Link>
+
+
+                </div>
+
+              </div>
+
+            )}
+
+
+
+          </>
+        ) : (
+
+          <div className={styles.Checkout_Failure}>
+
+
+            <div>
+
+              <span style={{ fontSize: '4rem', margin: '2rem' }}> Płatność zakończona niepowodzeniem</span>
+
+              <Link to={'/'}>
+                <div className={styles.Return_Button}>
+                  Powrót na stronę główną
+                  <MdKeyboardReturn size={'3rem'} />
+                </div>
+              </Link>
+
+
+            </div>
+
+          </div>
+        )
+
+      )
+
       }
 
-      {guestOrUser === 'guest' &&
-        <div>
-          Klucz został wysłany na adres email {guest.email}
-        </div>
-      }
 
 
-      <Footer />
+
+
+
+
+
+
     </div>
   )
 }

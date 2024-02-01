@@ -22,12 +22,8 @@ const RangeSlider = ({functionSetFilter}) => {
       if(priceFromUrl.length > 0){
 
         setPriceRange(JSON.parse(priceFromUrl))
-        setInputValues(JSON.parse(priceFromUrl));
-
-        console.log(priceRange)
-      
+        setInputValues(JSON.parse(priceFromUrl));      
       }
-  
   
     },[])
 
@@ -45,7 +41,7 @@ const RangeSlider = ({functionSetFilter}) => {
         } 
 
   
-      }, 300);
+      }, 100);
       
       return () => clearTimeout(delay);
 

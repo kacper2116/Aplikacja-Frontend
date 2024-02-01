@@ -163,9 +163,7 @@ const Navbar = () => {
 
   return (
 
-
-    <div className={styles.Container}>
-
+    <nav className={styles.Container}>
 
       <div className={styles.Left}>
 
@@ -179,7 +177,7 @@ const Navbar = () => {
 
           <div className={styles.SearchBar}>
             <AiOutlineSearch style={{ fontSize: "2rem" }} />
-            <input className={styles.SearchInput} placeholder='Search' value={searchTerm === undefined ? '' : searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onFocus={() => setSearchResultsVisible(true)} onKeyPress={handleKeyPress} />
+            <input className={styles.SearchInput} placeholder='Szukaj' value={searchTerm === undefined ? '' : searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onFocus={() => setSearchResultsVisible(true)} onKeyPress={handleKeyPress} />
             <MdClear className={styles.ClearButton} style={{ fontSize: "2rem" }} onClick={() => { setSearchTerm(undefined) }} />
           </div>
 
@@ -270,15 +268,18 @@ const Navbar = () => {
               <div className={styles.User_dropdown_menu}>
 
                 <div>
-                  <FaSignOutAlt /> <span onClick={() => dispatch(logout())}>Logout</span>
+                  <FaSignOutAlt /> <span onClick={() => dispatch(logout())}>Wyloguj</span>
                 </div>
 
                 <div>
-                  <FaLock /> <span>Change Password</span>
+                  <Link to={'/change-password'}>
+                 
+                  <FaLock /> <span>Zmień hasło</span>
+                  </Link>
                 </div>
 
                 <div>
-                  <TbBrandShopee /><span onClick={() => navigate('/orders')}>My orders</span>
+                  <TbBrandShopee /><span onClick={() => navigate('/orders')}>Zamówienia</span>
                 </div>
 
               </div>
@@ -298,7 +299,8 @@ const Navbar = () => {
 
       </div>
 
-    </div>
+   
+    </nav>
   )
 }
 

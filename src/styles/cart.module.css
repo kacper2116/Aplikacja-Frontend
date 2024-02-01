@@ -123,8 +123,16 @@
     align-items: center;
 }
 
-.Summary>* {
-    margin: 0.5rem 0;
+.Summary > *:not(:last-child){
+
+    border-bottom: 0.15rem solid rgb(104, 104, 104);
+    padding-bottom: 1rem;
+    width: 100%;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+   
+
 }
 
 .CheckoutButton {
@@ -138,56 +146,25 @@
     cursor: pointer;
 }
 
+
+
 .Summary_Info {
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
-}
-
-.Summary_Info>* {
-    margin: 0 1rem;
+    
 }
 
 .Summary_Info>h2 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+    flex: 1;
+    margin: 0 1.5rem;
+    
 }
 
-.Discount {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-
-}
-
-.Discount>* {
-    margin: 0.5rem 0;
-
-}
-
-.DiscountWrapper {
-    display: flex;
-    width: 50%;
-}
-
-.DiscountWrapper>input {
-   width: 70%;
-   font-size: 1rem;
-   padding:0.7rem;
-}
-
-.DiscountButton {
-
-    font-size: 1rem;
-    padding:0.7rem;
-    font-weight: 700;
-    width: 30%;
-    background-color: var(--color2);
-    color: var(--color1);
-    border: none;
-    cursor: pointer;
-
+.Summary_Info > h2:last-child {
+    text-align: right;
+    
 }
 
 
@@ -239,6 +216,11 @@
     margin: 2rem 0 1rem 0;
 }
 
+.Change_Email_Button{
+    width: 50% !important;
+    
+}
+
 .Guest_Panel .Login_Link {
 
     cursor: pointer;
@@ -251,9 +233,11 @@
 
 }
 
+
+
 .Payment_Container {
     width: 100%;
-    margin: 3rem 0;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
     text-align: center;

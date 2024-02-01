@@ -15,8 +15,8 @@ const Home = () => {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
       <Navbar />
       <Slider data={slides} />
-      <Section category="Najnowsze Gry" numberOfProducts={5} />
-      <Section category="Wszystkie Gry" numberOfProducts={10} />
+      <Section category="Latest Games" numberOfProducts={5} />
+      <Section category="All Games" numberOfProducts={10} />
 
       <PlatformsAndGenres />
 

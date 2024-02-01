@@ -1,14 +1,32 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styles from '../styles/imageGallery.module.css'
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 import { IoMdClose } from 'react-icons/io'
 import { FiMoreVertical } from 'react-icons/fi'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
+import { getImages as getImages } from '../firebase';
+import { HiDotsVertical } from "react-icons/hi";
 
 
-const ImageGallery = ({ data }) => {
+const ImageGallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedImage, setSelectedImage] = useState(null);
+
+
+  const [imageUrls, setImageUrls] = useState([]);
+  const folderPath = 'images/image_gallery';
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const images = await getImages(folderPath);
+      setImageUrls(images);
+    };
+
+    fetchData();
+
+  }, [folderPath]);
+
+
 
   const openModal = (image, index) => {
     setSelectedImage(image);
@@ -24,23 +42,22 @@ const ImageGallery = ({ data }) => {
 
     const goPrev = () => {
 
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % (data.length));
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + imageUrls.length) % (imageUrls.length));
 
     }
-
 
     const goNext = () => {
 
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % (data.length));
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % (imageUrls.length));
     }
 
-
     return (
-      <div className={styles.modal}>
+      <div className={styles.Modal}>
+         <span>{currentIndex + 1} / {imageUrls.length}</span>
         <div className={styles.LeftArrow} onClick={() => goPrev()}><HiOutlineChevronLeft /></div>
         <div className={styles.RightArrow} onClick={() => goNext()}><HiOutlineChevronRight /></div>
-        <img src={data[currentIndex].img} alt="Image" />
-        <span>{data[currentIndex].id}</span>
+        <img src={imageUrls[currentIndex]} alt="Image" />
+       
         <div className={styles.closeButton} onClick={onClose}><IoMdClose /></div>
       </div>
     );
@@ -51,24 +68,22 @@ const ImageGallery = ({ data }) => {
   let moreImages = '';
 
 
-  if (data.length > 5) {
-    images = data.slice(0, 5)
+
+  if (imageUrls.length > 5) {
+    images = imageUrls.slice(0, 5)
     moreImages = 'ImageGallery_Img_More'
 
+  
+
   } else {
-    images = data;
+    images = imageUrls;
     moreImages = 'ImageGallery_Img_More_Hide'
   }
-
-
-
-
 
   return (
     <div className={styles.ImageGallery_Container}>
 
 
-      <div className={`${styles[moreImages]} ${styles.ImageGallery_Img_More_Left}`}><AiFillCaretLeft /></div>
 
       {images.map((item, index) => {
 
@@ -76,14 +91,14 @@ const ImageGallery = ({ data }) => {
 
           <div className={styles.ImageGallery_Img}>
 
-            <img key={index} src={item.img} onClick={() => openModal(item.img, index)} />
+            <img key={index} src={item} onClick={() => openModal(item, index)} />
           </div>
 
         )
       })}
 
-
-      <div className={`${styles[moreImages]} ${styles.ImageGallery_Img_More_Right}`}><AiFillCaretRight /></div>
+    
+      <div title='Zobacz więcej' style={{backgroundImage:`url(${imageUrls[5]})`}}  onClick={() => openModal(images, 5)} className={`${styles[moreImages]} ${styles.ImageGallery_Img_More_Right}`}><HiDotsVertical /></div>
 
 
       {selectedImage && (

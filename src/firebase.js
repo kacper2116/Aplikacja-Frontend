@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -19,8 +19,19 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
 
-export async function getImage(location) {
-    const ImageURL = await getDownloadURL(ref(storage, location));
-    return await ImageURL;
+export const getStorageRef = (path) => ref(storage, path);
+
+export const getImages = async (folderPath) => {
+  const storageRef = getStorageRef(folderPath);
+  const images = [];
+
+  try {
+    const result = await listAll(storageRef);
+    const downloadURLs = await Promise.all(result.items.map((item) => getDownloadURL(item)));
+    images.push(...downloadURLs);
+  } catch (error) {
+    console.error('Error retrieving images from Firebase Storage:', error);
   }
-  
+
+  return images;
+};

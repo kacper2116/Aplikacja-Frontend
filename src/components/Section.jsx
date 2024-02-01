@@ -13,8 +13,6 @@ const Section = ({ category, numberOfProducts }) => {
   const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState([]);
 
-  console.log(baseURL)
-
   useEffect(() => {
 
     const getProducts = async () => {
@@ -74,12 +72,20 @@ const Section = ({ category, numberOfProducts }) => {
   };
 
 
+  const translateCategory = (category) => {
 
+  switch(category){
+    case 'Latest Games':return 'Najnowsze gry';break;
+    case 'All Games': return 'Wszystkie gry';break;
+  }
+
+}
 
   return (
 
-    <div className={styles.Container} ref={productsRef}>
-      <h2 className={styles.SectionTitle}>{category}</h2>
+    <section className={styles.Container} ref={productsRef}>
+
+      <h2 className={styles.SectionTitle}>{translateCategory(category)}</h2>
 
       {loading ? (
         <Loading size={5}/>
@@ -108,14 +114,11 @@ const Section = ({ category, numberOfProducts }) => {
       ) : (
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', marginTop:'3rem' }}>
           <button className={`${styles.SectionButton} ${styles.SectionButton_Hide}`} onClick={() => hideProducts()}> <IoIosArrowUp size="4rem" className={styles.SectionButtonIcon} /></button>
-          <button className={`${styles.SectionButton} ${styles.SectionButton_ShowAll}`} > <Link to={`/products/${category}`}>Zobacz więcej z <span style={{ fontWeight: '900' }}>{category}</span></Link> </button>
+          <button className={`${styles.SectionButton} ${styles.SectionButton_ShowAll}`} > <Link to={`/products/${category}`}>Zobacz więcej z <span style={{ fontWeight: '900' }}>{translateCategory(category)}</span></Link> </button>
         </div>
       )}
 
-
-
-
-    </div>
+    </section>
 
 
   )

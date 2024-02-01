@@ -1,5 +1,5 @@
 export const slides = [
-    {id:1, url:'https://cdn.wallpapersafari.com/92/64/jVIhC3.jpg'},
+    {id:1, url:'https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fbanner%2FBanner.jpeg?alt=media&token=03bd04d0-c6e3-49be-8798-7d6a2d947d59'},
     {id:2, url:'https://wallpaperaccess.com/full/109666.jpg'},
     {id:3, url:'https://wallpapers.com/images/hd/red-forest-trees-n8z3bf3dv0b2cj6w.jpg'},
     {id:4, url:'https://wallpaperset.com/w/full/b/b/8/484249.jpg'},

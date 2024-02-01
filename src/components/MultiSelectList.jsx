@@ -6,21 +6,9 @@ import { useSearchParams, setSearchParams, useParams } from "react-router-dom";
 
 const MultiSelectList = ({ name, label ,listItems, functionSetFilter }) => {
 
-  const { param } = useParams();
+
   const [searchParams, setSearchParams] = useSearchParams()
   const [selectedItems, setSelectedItems] = useState();
-  const [hideSelectList, setHideSelectList] = useState(false)
-
- 
-
-  useEffect(() => {
-
-    if (listItems.includes(param)) {
-      setHideSelectList(true)
-      console.log(listItems)
-    }else setHideSelectList(false)
-
-  }, [param])
 
   const options = listItems.map(item => ({ value: item, label: item }));
 
@@ -59,9 +47,6 @@ const MultiSelectList = ({ name, label ,listItems, functionSetFilter }) => {
     );
   };
 
-
-  if (!hideSelectList) {
-
     return (
 
 
@@ -84,10 +69,6 @@ const MultiSelectList = ({ name, label ,listItems, functionSetFilter }) => {
 
       </div>
     );
-
-  }
-
-
 
 };
 

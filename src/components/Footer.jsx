@@ -24,32 +24,22 @@ const FooterSection = ({ data }) => {
 }
 
 
+
 const FooterSection1 = {
-  header: "Kipme",
-  content: ["O nas", "Aktualności", "Kontakt"],
-  links: ["#", "#", "#"]
+  header: "Konto",
+  content: ["Logowanie", "Rejestracja"],
+  links: ["#/login", "#/register"]
 }
 const FooterSection2 = {
-  header: "Konto",
-  content: ["Logowanie", "Rejestracja", "Problem z kontem"],
-  links: ["#", "#", "#"]
-}
-const FooterSection3 = {
   header: "Gry",
-  content: ["Odkrywaj", "Wszystkie gry", "Najlepsze gry"],
-  links: ["#", "#", "#"]
+  content: ["Najnowsze", "Wszystkie gry"],
+  links: ["#/products/Latest%20Games", "#/products/All%20Games",]
 }
-const FooterSection4 = {
-  header: "Kipme",
-  content: ["O nas", "Aktualności", "Kontakt"],
-  links: ["#", "#", "#"]
-}
-
 
 
 const SocialMediaIcons = [<GrFacebook />, <BsTwitter />, <BsInstagram />, <SiTiktok />]
 
-const FooterSection5 = {
+const FooterSection3 = {
   header: "Social media",
   content: SocialMediaIcons,
   links: ["https://www.facebook.com/", "https://twitter.com/", "https://www.instagram.com/", "https://www.tiktok.com/"]
@@ -61,16 +51,16 @@ const FooterSection5 = {
 const Footer = () => {
   return (
 
-    <div className={styles.Container}>
+    <nav className={styles.Container}>
       <div className={styles.Wrapper}>
+        
         <FooterSection data={FooterSection1} />
         <FooterSection data={FooterSection2} />
         <FooterSection data={FooterSection3} />
-        <FooterSection data={FooterSection4} />
-        <FooterSection data={FooterSection5} />
+        
 
       </div>
-    </div>
+    </nav>
 
   )
 }

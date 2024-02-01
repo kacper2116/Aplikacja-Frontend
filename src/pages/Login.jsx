@@ -8,7 +8,6 @@ const Login = () => {
     <div>
       <LogoBar />
 
-      
         <LoginForm />
       
       <Footer />

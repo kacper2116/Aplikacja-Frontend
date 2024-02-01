@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import styles from '../styles/slider.module.css'
 import { slides } from '../data'
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md'
+import { getImages } from '../firebase';
+
 
 const Slider = ({ data }) => {
+    
 
     const [slide, setSlide] = useState(0);
 

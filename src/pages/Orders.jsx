@@ -27,20 +27,20 @@ const Orders = () => {
           }
         })
 
-        if(response.data && response.data.message){
+        if (response.data && response.data.message) {
           setOrders([])
           console.log("Brak zamówień")
-        }else if (response.data && response.data.orders){
+        } else if (response.data && response.data.orders) {
           setOrders(response.data.orders)
         }
 
       } catch (error) {
 
-        if(error.response){
+        if (error.response) {
           console.error("Błąd odpowiedzi od serwera", error.response.data)
-        }else if (error.request){
+        } else if (error.request) {
           console.error("Brak odpowiedzi od serwera", error.request)
-        }else console.error("Błąd serwera", error.message)
+        } else console.error("Błąd serwera", error.message)
 
       }
 
@@ -57,51 +57,62 @@ const Orders = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
+
+
       <Navbar />
 
 
-      {orders.length > 0 ? 
-      (
 
-      <div className={styles.Container}>
+      {orders.length > 0 ?
+        (
+          <>
 
-        <div className={styles.Info_Properties}>
 
-          <div>Id</div>
-          <div>Name</div>
-          <div>Status</div>
-          <div>Payment method</div>
-          <div>Date</div>
-          <div>Value</div>
-          <div>Details</div>
+                        
+              <h1 style={{marginBottom:'0.7rem'}}>Moje zamówienia</h1>
 
-        </div>
+              <div className={styles.Container}>
 
-        {orders && orders.map((order) => {
-          return (
+                <div className={styles.Info_Properties}>
 
-            <div className={styles.Order} key={order._id}>
-              <div>{order._id}</div>
-              <div>{order.products[0].title} {order.products[0].platform}</div>
-              <div>{order.status}</div>
-              <div>{order.paymentMethod}</div>
-              <div>{new Date(order.createdAt).toLocaleString()}</div>
-              <div>{order.orderValue} {order.currency}</div>
-              <div onClick={() => goToOrderDetails(order._id)}>Show Details</div>
+                  <div>Id</div>
+                  <div>Nazwa</div>
+                  <div>Status</div>
+                  <div>Metoda płatności</div>
+                  <div>Data</div>
+                  <div>Wartość</div>
+                  <div>Szczegóły</div>
 
-            </div>
+                </div>
 
-          )
+                {orders && orders.map((order) => {
+                  return (
 
-        })}
+                    <div className={styles.Order} key={order._id}>
+                      <div>{order._id}</div>
+                      <div>{order.products[0].title} {order.products[0].platform}</div>
+                      <div>{order.status}</div>
+                      <div>{order.paymentMethod}</div>
+                      <div>{new Date(order.createdAt).toLocaleString()}</div>
+                      <div>{order.orderValue} {order.currency}</div>
+                      <div><span className = {styles.Show_Details} onClick={() => goToOrderDetails(order._id)}>Pokaż szczegóły</span></div>
 
-      </div>
-      ): (
-        <div style={{marginTop:'10rem'}}>
-          <h1>Brak zamówień</h1>
-        </div>
-      )
-}
+                    </div>
+
+                  )
+
+                })}
+
+              </div>
+          </>
+        ) : (
+          <div style={{ marginTop: '10rem' }}>
+            <h1>Brak zamówień</h1>
+          </div>
+        )
+      }
+
+
       <Footer />
     </div>
   )

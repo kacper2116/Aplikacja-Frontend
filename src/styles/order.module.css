@@ -1,13 +1,16 @@
 .Container {
     width: 70%;
-    background-color: var(--color3);
+  
     display: flex;
     position: relative;
     margin-bottom: 2rem;
+
+    border: 0.1rem solid black;
+    border-radius: 0.5rem;
+    padding: 1rem;
 }
 
 .Order {
-    padding: 2rem;
     width: 100%;
 }
 
@@ -20,11 +23,12 @@
 .Order_Info {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
     margin: 2rem 0;
     font-weight: 600;
-    justify-content: center;
     text-align: center;
+
+    border-bottom: 0.1rem solid black;
+    padding-bottom: 1rem;
 
 }
 
@@ -33,26 +37,28 @@
   
 }
 
-.Order_Products > div {
-    border: 0.1rem solid var(--color1);
-    border-radius: 0.5rem;
-    overflow: hidden;
-    
-}
-
 .Order_Product{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
     margin: 2rem 0;
     font-weight: 600;
     align-items: center;
-  
+    justify-content: center;
+   
+
+    justify-items: center;
+}
+
+.Order_Product:not(:last-child){
+
 
 }
 
+
 .Order_Product_Img > img{
     width: 100px;
+    display: flex;
+    border-radius: 0.5rem;
 }
 
 .Order_Product_Details {
@@ -101,14 +107,15 @@
 }
 
 .Product_Key > button{
-    width: 80%;
+  
     font-size: 1.2rem;
     padding: 1rem;
     border: none;
     color: var(--color1);
-    background-color: var(--color2);
+    background-color: var(--color3);
     border-radius: 0.5rem;
     cursor: pointer;
+
 
 }
 
@@ -123,17 +130,20 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    display: flex;
     color: var(--color1);
 
     background-color: var(--color3);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
 .Modal > div > p {
     font-size: 2rem;
     text-align: center;
-    margin: 3rem 0 1rem 0;
+    margin-bottom: 1rem;
 }
 
 .Modal > div {
@@ -163,7 +173,7 @@
 
 .Modal  .Product_Key{
     font-size: 1.2rem;
-    margin-top: 2rem;
+   
 
     background-color: var(--color1);
     padding: 1rem;

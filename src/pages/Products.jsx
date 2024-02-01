@@ -12,10 +12,17 @@ import { useSearchParams, setSearchParams, useParams } from "react-router-dom";
 
 const Products = () => {
 
+
+
   const navigate = useNavigate();
   const location = useLocation();
   const { param } = useParams();
 
+
+  useEffect(() => {
+   
+    window.scrollTo(0, 0);
+  }, [param]);
 
   
   const [searchParams, setSearchParams] = useSearchParams()

@@ -9,6 +9,7 @@ import Loading from './Loading'
 
 
 
+
 const LoginForm = () => {
 
   const [username, setUsername] = useState('')
@@ -65,11 +66,13 @@ const LoginForm = () => {
     <form onSubmit={handleLogin}>
 
       <div className={styles.FormField}>
+       
         <input name='login' type='text' placeholder='Login' required onChange={(e) => setUsername(e.target.value)}></input>
       </div>
 
       <div className={styles.FormField}>
-        <input name='password' type='password' required placeholder='Password' onChange={(e) => setPassword(e.target.value)}></input>
+    
+        <input name='password' type='password' required placeholder='Hasło' onChange={(e) => setPassword(e.target.value)}></input>
       </div>
 
       <div className={styles.FormField}>
@@ -84,7 +87,7 @@ const LoginForm = () => {
 
       {error && <span className={styles.Error}>{error}</span>}
 
-      <a className={styles.Form_Link} href='#'>Zapomniałeś hasła?</a>
+     
 
     </div>
   )

@@ -6,7 +6,9 @@
     width: 20%;
     height: 70vh;
     padding-top: 1%;
-    box-shadow: 1px 1px 1px 1px var(--color3);
+    box-shadow: 0.1rem 0.1rem 0.3rem 0.1rem var(--color3);
+
+
     
 }
 .FilterSection{

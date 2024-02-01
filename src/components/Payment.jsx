@@ -41,7 +41,9 @@ const Payment = () => {
     variables: {
       colorPrimary: 'rgb(243, 146, 55)',
       colorBackground: '#f5f5f5',
-      colorText: 'rgb(84, 84, 84)',
+      colorText: 'rgb(0, 0, 0)',
+      colorTextSecondary :'rgb(175, 175, 175)',
+     
     },
   };
   const options = {
