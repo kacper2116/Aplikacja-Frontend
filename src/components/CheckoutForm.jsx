@@ -63,7 +63,7 @@ const CheckoutForm = () => {
       elements,
       confirmParams: {
 
-        return_url: "http://localhost:3000/#/checkout",
+        return_url: "https://kacper2116.github.io/Aplikacja-Frontend/#/checkout",
       },
     });
 
