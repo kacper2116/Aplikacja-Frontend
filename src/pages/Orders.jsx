@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import { useSelector } from 'react-redux';
 import styles from '../styles/orders.module.css'
 import { useNavigate, useParams } from 'react-router-dom';
+import Loading from '../components/Loading';
 
 
 
@@ -14,7 +15,8 @@ const Orders = () => {
   const [orders, setOrders] = useState([])
   const userToken = useSelector(state => state.user.currentUser);
   const baseURL = process.env.REACT_APP_BASE_URL
-
+  const [loading, setLoading] = useState(true)
+  
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const Orders = () => {
 
         if (response.data && response.data.message) {
           setOrders([])
-          console.log("Brak zamówień")
+         
         } else if (response.data && response.data.orders) {
           setOrders(response.data.orders)
         }
@@ -42,6 +44,8 @@ const Orders = () => {
           console.error("Brak odpowiedzi od serwera", error.request)
         } else console.error("Błąd serwera", error.message)
 
+      }finally{
+        setLoading(false)
       }
 
     }
@@ -62,13 +66,16 @@ const Orders = () => {
       <Navbar />
 
 
+    {loading ? (
+      <Loading size={5}></Loading>
+    ): (
 
+  
+      <>
       {orders.length > 0 ?
         (
           <>
 
-
-                        
               <h1 style={{marginBottom:'0.7rem'}}>Moje zamówienia</h1>
 
               <div className={styles.Container}>
@@ -111,6 +118,10 @@ const Orders = () => {
           </div>
         )
       }
+      </>
+
+
+      )}
 
 
       <Footer />
