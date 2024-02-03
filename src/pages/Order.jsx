@@ -85,8 +85,8 @@ const Order = () => {
 
     if (orderData && orderData.products) {
 
+        console.log(orderData)
     
-
         return (
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>

@@ -64,6 +64,7 @@ const CheckoutForm = () => {
       confirmParams: {
 
         return_url: "https://kacper2116.github.io/Aplikacja-Frontend/#/checkout",
+   
       },
     });
 
