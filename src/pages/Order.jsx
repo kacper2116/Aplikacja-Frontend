@@ -118,7 +118,7 @@ const Order = () => {
                                             <div className={styles.Order_Product_Details}>
                                                 <div className={styles.Wrapper}>
                                                     <div className={styles.Order_Product_Img}>
-                                                        <img src='https://image.api.playstation.com/vulcan/ap/rnd/202211/0711/kh4MUIuMmHlktOHar3lVl6rY.png'></img>
+                                                        <img src={product.coverImg}></img>
                                                     </div>
 
                                                     <div>
