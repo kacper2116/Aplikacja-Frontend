@@ -5,7 +5,7 @@ import Logo from '../img/Logo.png'
 const LogoBar = () => {
   return (
     <div className={styles.Container}>
-      <a href='Home'><img className={styles.Logo} src={Logo}></img></a>
+      <a href='#'><img className={styles.Logo} src={Logo}></img></a>
     </div>
   )
 }

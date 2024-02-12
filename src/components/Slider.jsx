@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import styles from '../styles/slider.module.css'
-import { slides } from '../data'
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md'
-import { getImages } from '../firebase';
+
 
 
 const Slider = ({ data }) => {
     
-
     const [slide, setSlide] = useState(0);
 
     const nextSlide = () => {
@@ -26,7 +24,7 @@ const Slider = ({ data }) => {
 
             {data.map((item, index) => {
 
-                return <img src={item.url} key={index} className={slide === index ? styles.Slide : `${styles.Slide} ${styles.HiddenSlide}`}></img>
+                return <img src={item} key={index} className={slide === index ? styles.Slide : `${styles.Slide} ${styles.HiddenSlide}`}></img>
 
             })}
 

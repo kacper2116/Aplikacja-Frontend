@@ -59,7 +59,7 @@ const Order = () => {
     const getKey = async (productId) => {
 
         try {
-            const response = await axios.post(`http://localhost:5000/api/orders/order/${orderId}/receive/${productId}`,
+            const response = await axios.post(`${baseURL}/orders/order/${orderId}/receive/${productId}`,
 
                 null,
                 {

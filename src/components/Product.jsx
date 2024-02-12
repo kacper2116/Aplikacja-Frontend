@@ -9,7 +9,6 @@ const Product = ({ data }) => {
 
 		<Link to = {`/product?id=${data._id}`}>	
 		
-
 		<div className={styles.Container}>
 
 			<div className={styles.Img} style={{ backgroundImage: `url(${data.coverImg})` }} />

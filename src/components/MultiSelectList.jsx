@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { FaTimes } from 'react-icons/fa';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useSearchParams, setSearchParams, useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const MultiSelectList = ({ name, label ,listItems, functionSetFilter }) => {
 

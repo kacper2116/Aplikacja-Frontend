@@ -1,10 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// Konfiguracja firebase
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBIGSRDg64cbPdmn0js7iEGrgUUn4RcDl4",
   authDomain: "aplikacja-80393.firebaseapp.com",
@@ -14,7 +12,7 @@ const firebaseConfig = {
   appId: "1:23522663107:web:bbc08eb2a5bee1838b2076"
 };
 
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 

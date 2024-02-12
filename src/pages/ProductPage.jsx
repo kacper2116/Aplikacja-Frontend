@@ -37,6 +37,7 @@ const ProductPage = () => {
           setProduct(response.data.product)
           setAvailablePlatforms(response.data.availablePlatforms)
           
+         
 
         }
 

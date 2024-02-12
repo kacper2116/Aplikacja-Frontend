@@ -1,37 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from '../styles/productDetails.module.css'
 import { addProduct } from '../redux/cartRedux'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsCartCheckFill } from "react-icons/bs";
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHeartCirclePlus } from "react-icons/fa6";
 import ImageGallery from './ImageGallery'
 import axios from 'axios';
-import { ToastProvider, useToasts } from 'react-toast-notifications';
+import {useToasts } from 'react-toast-notifications';
 
 const ProductDetails = ({ product, availablePlatforms }) => {
-  
+
 
   const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
   const baseURL = process.env.REACT_APP_BASE_URL
   const { addToast } = useToasts();
-  const [allPlatforms, setAllPlatforms] = useState(product.platforms)
   const [selectedPlatform, setSelectedPlatform] = useState(Object.keys(availablePlatforms)[0])
   const [releaseDate, setReleaseDate] = useState('')
   const [availability, setAvailability] = useState(Object.keys(availablePlatforms).length > 0 ? true : false)
 
   const [tooMuch, setTooMuch] = useState(false)
+  console.log(availablePlatforms)
 
   useEffect(() => {
 
     const checkQuantity = async () => {
 
-
       try {
         const response = await axios.get(`${baseURL}/products/${product._id}/${selectedPlatform}/quantity`)
         const productQuantity = response.data
+
 
         const productsInCart = cart.products.filter(p => p._id === product._id && p.selectedPlatform === selectedPlatform);
 
@@ -41,10 +40,6 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
         }
         else setTooMuch(false)
-
-
-
-
 
 
       } catch (error) {
@@ -110,6 +105,18 @@ const ProductDetails = ({ product, availablePlatforms }) => {
     }
   }
 
+  const descriptionRef = useRef(null)
+  const galleryRef = useRef(null)
+  const requirementsRef = useRef(null)
+  const additionalInfoRef = useRef(null)
+
+  const scrollToSection = (ref) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+
 
 
   const AddedToCart = () => {
@@ -154,9 +161,6 @@ const ProductDetails = ({ product, availablePlatforms }) => {
   return (
 
 
-
-
-
     <article className={styles.Container}>
       <div className={styles.Wrapper}>
         <div className={styles.Left}>
@@ -173,6 +177,7 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
                 {product.platforms && product.platforms.map((platform, index) => {
                   const isPlatformAvailable = availablePlatforms.hasOwnProperty(platform);
+
 
                   return (
                     <div key={index}
@@ -250,16 +255,16 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
       <div className={styles.MoreInfo}>
 
-        <div>Opis</div>
-        <div>Zdjęcia</div>
+        <div onClick={() => scrollToSection(descriptionRef)}>Opis</div>
+        <div onClick={() => scrollToSection(galleryRef)} >Zdjęcia</div>
         {product.platforms.includes('PC') &&
-          <div>Wymagania systemowe</div>
+          <div onClick={() => scrollToSection(requirementsRef)}>Wymagania systemowe</div>
         }
-        <div>Dodatkowe informacje</div>
+        <div onClick={() => scrollToSection(additionalInfoRef)}>Dodatkowe informacje</div>
 
       </div>
 
-      <section className={styles.Desc}>
+      <section className={styles.Desc} ref={descriptionRef}>
         <h1>Opis</h1>
 
         <div className={styles.Desc_Content}>
@@ -275,7 +280,7 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
       </section>
 
-      <section>
+      <section ref={galleryRef}>
         <ImageGallery />
       </section>
 
@@ -287,7 +292,7 @@ const ProductDetails = ({ product, availablePlatforms }) => {
 
 
       {product.platforms.includes('PC') &&
-        <section className={styles.Requirements_Container}>
+        <section className={styles.Requirements_Container} ref={requirementsRef}>
           <h1>Wymagania systemowe(PC)</h1>
 
           <div className={styles.Requirements_Content}>
@@ -325,7 +330,7 @@ const ProductDetails = ({ product, availablePlatforms }) => {
       }
 
 
-      <section className={styles.AdditionalInfo}>
+      <section className={styles.AdditionalInfo} ref={additionalInfoRef}>
         <h1>Dodatkowe informacje</h1>
 
         <div className={styles.AdditionalInfo_Wrapper}>

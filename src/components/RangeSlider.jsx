@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Slider, Typography, TextField  } from '@material-ui/core';
+import { Slider, TextField  } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
-import { useSearchParams, setSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const RangeSlider = ({functionSetFilter}) => {
 

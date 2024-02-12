@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import styles from '../styles/imageGallery.module.css'
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 import { IoMdClose } from 'react-icons/io'
-import { FiMoreVertical } from 'react-icons/fi'
-import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { getImages as getImages } from '../firebase';
 import { HiDotsVertical } from "react-icons/hi";
 

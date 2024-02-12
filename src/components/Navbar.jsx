@@ -9,9 +9,9 @@ import { FaUser, FaSignOutAlt, FaLock } from 'react-icons/fa';
 import Logo from '../img/Logo.png';
 import Loading from './Loading'
 import { TbBrandShopee } from "react-icons/tb";
-import { useSearchParams, setSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-import { Link, Navigate, useNavigate, useNavigation } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../redux/userActions'
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from "jwt-decode";

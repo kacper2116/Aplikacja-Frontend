@@ -4,9 +4,11 @@ import { resetGuestInfo } from "./guestRedux"
 import axios from "axios"
 import { Navigate, useNavigate } from "react-router-dom"
 
+const baseURL = process.env.REACT_APP_BASE_URL
+
+
 export const login = async (dispatch, user) => {
 
-    const baseURL = process.env.REACT_APP_BASE_URL
     dispatch(loginStart())
 
     try {

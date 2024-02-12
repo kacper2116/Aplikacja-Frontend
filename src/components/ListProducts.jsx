@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Product from '../components/Product'
 import styles from '../styles/listProducts.module.css'
 import axios from 'axios'
-import { useLocation } from 'react-router-dom';
 import Loading from './Loading'
 import { RiEmotionUnhappyLine } from "react-icons/ri";
-import { useSearchParams, setSearchParams, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PageNavigation from '../components/PageNavigation'
 
 const ListProducts = ({ searchParams }) => {

@@ -75,7 +75,7 @@ const Checkout = () => {
 
         } else {
 
-          const response = await axios.post('http://localhost:5000/api/checkout/guest', {
+          const response = await axios.post(`${baseURL}/checkout/guest`, {
             paymentIntentId: paymentIntent,
             guestEmail: guest.email,
             products: cart.products

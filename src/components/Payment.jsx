@@ -24,9 +24,9 @@ const Payment = () => {
       quantity: product.quantity,
     }));
 
-    console.log(productsInfo)
+ 
 
-    // Create PaymentIntent as soon as the page loads
+
     fetch(`${baseURL}/checkout/payment`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/cart.module.css'
-import { FiPlus } from "react-icons/fi";
-import { FiMinus } from "react-icons/fi";
-import { FiDelete } from "react-icons/fi";
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { increaseQuantity, decreaseQuantity, removeProduct } from '../redux/cartRedux';
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { RiDeleteBin2Fill } from "react-icons/ri";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import Payment from './Payment';
 import { addGuest, removeGuest } from "../redux/guestActions";
 import axios from 'axios';
-import { ToastProvider, useToasts } from 'react-toast-notifications';
+import {useToasts } from 'react-toast-notifications';
 
-
-const KEY = process.env.REACT_APP_STRIPE
 
 const Cart = () => {
 
@@ -26,9 +20,6 @@ const Cart = () => {
   const dispatch = useDispatch();
   const baseURL = process.env.REACT_APP_BASE_URL
 
-  const [stripeToken, setStripeToken] = useState(null)
-  const navigate = useNavigate()
-
   const { addToast } = useToasts();
 
   const user = useSelector(state => state.user.currentUser);
@@ -36,7 +27,6 @@ const Cart = () => {
   const [email, setEmail] = useState('')
 
   const handleIncreaseQuantity = (product) => {
-
 
     const checkQuantity = async () => {
 
@@ -49,7 +39,6 @@ const Cart = () => {
           dispatch(increaseQuantity({ name: product.name }));
          
         }
-
 
         else {
 
@@ -193,7 +182,6 @@ const Cart = () => {
               )}
 
 
-
               {(user || guest) &&
 
                 <div className={styles.Payment_Container}>
@@ -203,13 +191,9 @@ const Cart = () => {
 
               }
 
-
             </div>
 
           </div>
-
-
-
 
         </div>
       }
