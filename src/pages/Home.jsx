@@ -8,11 +8,11 @@ import PlatformsAndGenres from '../components/PlatformsAndGenres'
 
 const Home = () => {
 
-  const slides = ['https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fslide%207.png?alt=media&token=46efdc24-bbb8-4f20-848d-2ee4c11a119f',
-  'https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fslide%206.png?alt=media&token=aeba3e54-fe04-4d2f-866c-2712ec553927',
-  'https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fslide%205.jpg?alt=media&token=bc450e15-5074-4855-bfdc-d7e3a63bfd52',
-  'https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fslide%203.jpg?alt=media&token=53ffa663-8a79-4692-94bd-1354e83d00bd',
-  'https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fslide%204.jpg?alt=media&token=07995b3f-a79b-4c45-89eb-6de16c17fd7d',
+  const slides = ['https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fwide.jpg?alt=media&token=bcefcb3c-8155-475a-b79e-02a24918a156',
+  'https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fwide2.jpg?alt=media&token=eeb41dd7-581c-4e60-b705-49a71d3de480',
+  'https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fwide3.jpg?alt=media&token=5ae83a6a-e2a7-4f37-8191-e49aba80516f',
+  'https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fwide4.jpg?alt=media&token=69174e1f-80ae-4a20-b7b8-6e6a6b969275',
+  'https://firebasestorage.googleapis.com/v0/b/aplikacja-80393.appspot.com/o/images%2Fslides%2Fwide5.jpg?alt=media&token=fa7c7c57-0edb-4959-8cb7-ff945db22b3d',
   
 ]
 
